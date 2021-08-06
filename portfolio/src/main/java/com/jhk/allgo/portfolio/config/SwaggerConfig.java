@@ -16,8 +16,8 @@ public class SwaggerConfig {
 	
 	private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Simple-MSA-Product")
-                .description("3주차 리뷰")
+                .title("Project Allgo - portfolio")
+                .description("MSA - 포트폴리오")
                 .build();
     }
 
