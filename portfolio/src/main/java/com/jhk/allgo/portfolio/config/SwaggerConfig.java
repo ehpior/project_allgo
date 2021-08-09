@@ -24,7 +24,7 @@ public class SwaggerConfig {
     @Bean
     public Docket commonApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("exampleGroupName")
+                .groupName("allgo_portfolio")
                 .apiInfo(this.apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors
