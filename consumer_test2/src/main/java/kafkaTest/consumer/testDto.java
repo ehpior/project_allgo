@@ -2,12 +2,20 @@ package kafkaTest.consumer;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Builder;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class testDto {
 	private int id = 0;
 	private String str1 = "";
 	private String str2 = "";
 	
+	@Builder
+	public testDto(int id, String str1, String str2){
+		this.id = id;
+		this.str1 = str1;
+		this.str2 = str2;
+	}
 	
 	@Override
 	public String toString() {

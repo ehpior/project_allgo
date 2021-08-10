@@ -19,7 +19,7 @@ public class App {
 	private static final String FIN_MESSAGE = "exit";
 	public static void main(String[] args) {
 		Properties properties = new Properties();
-		properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "1.240.167.231:9092");
+		properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
 		properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 		properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 		properties.put(ConsumerConfig.GROUP_ID_CONFIG, "hktest2");
@@ -35,9 +35,17 @@ public class App {
 					System.out.println(message);
 					JSONArray jAry = new JSONArray(message);
 					
-					System.out.println(jAry.getInt(0));
+					System.out.println(jAry.getString(0));
 					System.out.println(jAry.getString(1));
-					System.out.println(jAry.getString(2));
+					System.out.println(jAry.getFloat(2));
+					
+					testDto tDto = testDto.builder()
+							.str1(jAry.getString(0))
+							.str2(jAry.getString(1))
+							.id(jAry.getInt(2))
+							.build();
+					
+					System.out.println(tDto.toString());
 					
 /*					ObjectMapper objMapper = new ObjectMapper();
 					testDto tDto = objMapper.readValue(message, testDto.class);

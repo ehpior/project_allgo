@@ -55,7 +55,7 @@ class real_program(Structure):
 
 def test_cheg_data(codes):
     rand_num = randrange(len(codes))
-    index = int(rand_num)
+    #index = int(rand_num)
     # code = choice(codes).encode()
     code = codes[rand_num].encode()
     print("test_cheg_code : " + codes[rand_num])
@@ -83,10 +83,11 @@ def test_cheg_data(codes):
     a5 = float(randrange(50000))
     high_time = float(randrange(50000))
     low_time = float(randrange(50000))
-    cheg_hk = real_cheg(index, code, time, price, change_price, increase_rate, sell_1, buy_1,
+    
+    cheg_hk = [code, time, price, change_price, increase_rate, sell_1, buy_1,
                                        volume, cul_volume, cul_amount, open, high, low, plus_minus,
                                        a1, a2, a3, turn_over, a4, volume_power, capitalization,
-                                       market, a5, high_time, low_time)
+                                       market, a5, high_time, low_time]
     return cheg_hk
     #s.sendto(cheg_hk, ('172.20.10.2', 7777))
 

@@ -18,6 +18,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QAxContainer import *
 from ctypes import *
 import redis
+from kafka import KafkaProducer
+from json import dumps
 
 """ This class defines a C-like struct """
 
@@ -35,6 +37,8 @@ class MyWindow(QMainWindow):
 
         self.db_redis = redis.StrictRedis(host='1.240.167.231', port=6379, db=0, password='wjdgusrl34', charset="utf-8",
                                           decode_responses=True)
+        
+        self.kafka_producer = KafkaProducer(bootstrap_servers='1.240.167.231:9092', value_serializer=lambda x: dumps(x).encode('utf-8'))
 
         self.setWindowTitle("Real")
         self.setGeometry(300, 300, 300, 600)
@@ -70,27 +74,6 @@ class MyWindow(QMainWindow):
         self.ocx.OnReceiveTrData.connect(self.receive_trdata)
         self.CommmConnect()
 
-        self.cheg_addr = ('127.0.0.1', 7777)
-        self.program_addr = ('127.0.0.1', 8888)
-
-        #tcp
-        #self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #udp
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-        """
-        self.s.bind(self.server_addr)
-        print("bind with %s" % repr(self.server_addr))
-
-        try:
-            self.s.listen(3)
-            self.conn, self.addr = self.s.accept()
-        except:
-            print("ERROR: Connection to %s refused" % repr(self.server_addr))
-            sys.exit(1)
-
-        print("accepted %s", self.addr)"""
-
     def btn_getStockList(self):
         self.ret = self.ocx.dynamicCall("GetCodeListByMarket(QString)", ["0"]).split(';')
         self.ret2 = self.ocx.dynamicCall("GetCodeListByMarket(QString)", ["10"]).split(';')
@@ -120,7 +103,6 @@ class MyWindow(QMainWindow):
 
             self.SetRealReg(screenNo, ';'.join(setList), "10;131", 0)
 
-
         #self.SetRealReg("1000", ';'.join(self.ret[0:100]), "10;131", 0)
 
         print("finished")
@@ -131,14 +113,16 @@ class MyWindow(QMainWindow):
         print("BusinessCheck called")
 
     def btn_testSendChegData(self):
-        cheg_data = stockData.test_cheg_data(self.ret)
+        tick_cheg = stockData.test_cheg_data(self.ret)
 
-        self.s.sendto(cheg_data, self.cheg_addr)
+        self.producer.send('tick.cheg', value=tick_cheg)
+        self.producer.flush()
 
     def btn_testSendProgramData(self):
-        program_data = stockData.test_program_data(self.ret)
+        tick_program = stockData.test_program_data(self.ret)
 
-        self.s.sendto(program_data, self.program_addr)
+        self.producer.send('tick.program', value=tick_program)
+        self.producer.flush()
 
     def receive_trdata(self, screen_no, rqname, trcode, recordname, prev_next, data_len, err_code, msg1, msg2):
         if rqname == "opt90008_req":
@@ -157,7 +141,6 @@ class MyWindow(QMainWindow):
     def _handler_real_data(self, code, real_type, data):
 
         if real_type == "주식체결":
-            index = int(self.stock_list.index(code))
             stock_code = code.encode()
             time = (self.GetCommRealData(code, 20)).encode()
             price = float(self.GetCommRealData(code, 10))
@@ -185,12 +168,13 @@ class MyWindow(QMainWindow):
             high_time = toFloat(self.GetCommRealData(code, 567))
             low_time = toFloat(self.GetCommRealData(code, 568))
 
-            cheg_hk = stockData.real_cheg(index, stock_code, time, price, change_price, increase_rate, sell_1, buy_1,
-                                          volume, cul_volume, cul_amount, open, high, low, plus_minus,
-                                          a1, a2, a3, turn_over, a4, volume_power, capitalization,
-                                          market, a5, high_time, low_time)
+            tick_cheg = [stock_code, time, price, change_price, increase_rate, sell_1, buy_1,
+                            volume, cul_volume, cul_amount, open, high, low, plus_minus,
+                            a1, a2, a3, turn_over, a4, volume_power, capitalization,
+                            market, a5, high_time, low_time]
 
-            self.s.sendto(cheg_hk, self.cheg_addr)
+            self.producer.send('tick.cheg', value=tick_cheg)
+            self.producer.flush()
 
         if real_type == "종목프로그램매매":  ##   ' won' 금액    →   단위당 백만원
             index = int(self.stock_list.index(code))
@@ -212,11 +196,12 @@ class MyWindow(QMainWindow):
             market = toFloat(self.GetCommRealData(code, 215))
             ticker = toFloat(self.GetCommRealData(code, 216))
 
-            program_hk = stockData.real_program(index, stock_code, time, price, plus_minus, change_price,
-                                                increase_rate, cul_volume, sell_volume, sell_amount, buy_volume,
-                                                buy_amount, net_buy_volume, net_buy_amount, a1, a2, market, ticker)
+            tick_program = [index, stock_code, time, price, plus_minus, change_price,
+                                increase_rate, cul_volume, sell_volume, sell_amount, buy_volume,
+                                buy_amount, net_buy_volume, net_buy_amount, a1, a2, market, ticker]
 
-            self.s.sendto(program_hk, self.program_addr)
+            self.producer.send('tick.program', value=tick_program)
+            self.producer.flush()
 
         if real_type == "장시작시간":
             gubun = self.GetCommRealData(code, 215)
