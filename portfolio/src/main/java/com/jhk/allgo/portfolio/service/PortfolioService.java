@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.jhk.allgo.portfolio.exception.PortfolioNotFoundException;
-import com.jhk.allgo.portfolio.model.Portfolio;
 import com.jhk.allgo.portfolio.model.dto.response.PortfolioResponseDto;
+import com.jhk.allgo.portfolio.model.entity.Portfolio;
 import com.jhk.allgo.portfolio.repository.PortfolioRepository;
 
 import lombok.RequiredArgsConstructor;

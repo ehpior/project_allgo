@@ -1,6 +1,6 @@
 package com.jhk.allgo.portfolio.model.dto.response;
 
-import com.jhk.allgo.portfolio.model.Portfolio;
+import com.jhk.allgo.portfolio.model.entity.Portfolio;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;

@@ -1,0 +1,26 @@
+체결
+0. 종목코드 : code
+1. 20 : 체결시간 : time
+2. 10 : 현재가 : price
+3. 11 : 전일대비 : change_price
+4. 12 : 등락율 : increase_rate
+5. 15 : 거래량 : volume
+6. 13 : 누적거래량 : cum_volume
+7. 14 : 누적거래대금 : cum_amount
+8. 16 : 시가 : open
+9. 17 : 고가 : high
+10. 18 : 저가 : low
+11. 31 : 거래회전율 :turn_over
+12. 228 : 체결강도 : volume_power
+13. 311 : 시총 : capitalization
+
+
+프로그램
+0. 종목코드 : code
+1. 20 : 체결시간 : time
+2. 202 : 매도수량 : sell_volume
+3. 204 : 매도금액 : sell_amount
+4. 206 : 매수수량 : buy_volume
+5. 208 : 매수금액 : buy_amount
+6. 210 : 순매수수량 : net_buy_volume
+7. 212 : 순매수금액 : net_buy_amount

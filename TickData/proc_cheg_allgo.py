@@ -9,14 +9,10 @@ References:
 
 #얘가 server이고 c가 client일때
 
-import socket
-import sys
-import random
 import stockData
 from pykiwoom.kiwoom import *
 from PyQt5.QtWidgets import *
 from PyQt5.QAxContainer import *
-from ctypes import *
 import redis
 from kafka import KafkaProducer
 from json import dumps
@@ -27,6 +23,14 @@ def toFloat(item):
     result = 0.0
     try:
         result = float(item)
+    except:
+        pass
+    return result
+
+def toInt(item):
+    result = 0
+    try:
+        result = int(item)
     except:
         pass
     return result
@@ -68,10 +72,14 @@ class MyWindow(QMainWindow):
         btn4.move(20, 430)
         btn4.clicked.connect(self.btn_testSendProgramData)
 
+        btn4 = QPushButton("프로그램Data TestSend", self)
+        btn4.resize(200, 60)
+        btn4.move(20, 510)
+        btn4.clicked.connect(self.btn_testSendBusinessData)
+
         self.ocx = QAxWidget("KHOPENAPI.KHOpenAPICtrl.1")
         self.ocx.OnEventConnect.connect(self._handler_login)
         self.ocx.OnReceiveRealData.connect(self._handler_real_data)
-        self.ocx.OnReceiveTrData.connect(self.receive_trdata)
         self.CommmConnect()
 
     def btn_getStockList(self):
@@ -115,20 +123,31 @@ class MyWindow(QMainWindow):
     def btn_testSendChegData(self):
         tick_cheg = stockData.test_cheg_data(self.ret)
 
-        self.producer.send('tick.cheg', value=tick_cheg)
-        self.producer.flush()
+        print(tick_cheg)
+
+        try:
+            self.kafka_producer.send('tick.cheg', value=tick_cheg)
+            self.kafka_producer.flush()
+        except Exception as e:
+            print(e)
 
     def btn_testSendProgramData(self):
         tick_program = stockData.test_program_data(self.ret)
 
-        self.producer.send('tick.program', value=tick_program)
-        self.producer.flush()
+        try:
+            self.kafka_producer.send('tick.program', value=tick_program)
+            self.kafka_producer.flush()
+        except Exception as e:
+            print(e)
 
-    def receive_trdata(self, screen_no, rqname, trcode, recordname, prev_next, data_len, err_code, msg1, msg2):
-        if rqname == "opt90008_req":
-            print("opt90008_req")
-            #name = self.kiwoom.dynamicCall("CommGetData(QString, QString, QString, int, QString)", trcode, "", rqname, 0, "시간")
-            #volume = self.kiwoom.dynamicCall("CommGetData(QString, QString, QString, int, QString)", trcode, "", rqname, 0, "거래량")
+    def btn_testSendBusinessData(self):
+        tick_business = ['143050', '9']
+
+        try:
+            self.kafka_producer.send('tick.business', value=tick_business)
+            self.kafka_producer.flush()
+        except Exception as e:
+            print(e)
 
     def CommmConnect(self):
         self.ocx.dynamicCall("CommConnect()")
@@ -141,73 +160,62 @@ class MyWindow(QMainWindow):
     def _handler_real_data(self, code, real_type, data):
 
         if real_type == "주식체결":
-            stock_code = code.encode()
-            time = (self.GetCommRealData(code, 20)).encode()
-            price = float(self.GetCommRealData(code, 10))
+            try:
+                stock_code = code
+                time = self.GetCommRealData(code, 20)
+                price = toInt(self.GetCommRealData(code, 10))
+                change_price = toInt(self.GetCommRealData(code, 11))
+                increase_rate = toFloat(self.GetCommRealData(code, 12))
+                volume = toInt(self.GetCommRealData(code, 15))
+                cul_volume = toInt(self.GetCommRealData(code, 13))
+                cul_amount = toInt(self.GetCommRealData(code, 14))
+                open = toInt(self.GetCommRealData(code, 16))
+                high = toInt(self.GetCommRealData(code, 17))
+                low = toInt(self.GetCommRealData(code, 18))
+                turn_over = toFloat(self.GetCommRealData(code, 31))
+                volume_power = toFloat(self.GetCommRealData(code, 228))
+                capitalization = toInt(self.GetCommRealData(code, 311))
 
-            change_price = toFloat(self.GetCommRealData(code, 11))
-            increase_rate = toFloat(self.GetCommRealData(code, 12))
-            sell_1 = toFloat(self.GetCommRealData(code, 27))
-            buy_1 = toFloat(self.GetCommRealData(code, 28))
-            volume = toFloat(self.GetCommRealData(code, 15))
-            cul_volume = toFloat(self.GetCommRealData(code, 13))
-            cul_amount = toFloat(self.GetCommRealData(code, 14))
-            open = toFloat(self.GetCommRealData(code, 16))
-            high = toFloat(self.GetCommRealData(code, 17))
-            low = toFloat(self.GetCommRealData(code, 18))
-            plus_minus = toFloat(self.GetCommRealData(code, 25))
-            a1 = toFloat(self.GetCommRealData(code, 26))
-            a2 = toFloat(self.GetCommRealData(code, 29))
-            a3 = toFloat(self.GetCommRealData(code, 30))
-            turn_over = toFloat(self.GetCommRealData(code, 31))
-            a4 = toFloat(self.GetCommRealData(code, 32))
-            volume_power = toFloat(self.GetCommRealData(code, 228))
-            capitalization = toFloat(self.GetCommRealData(code, 311))
-            market = toFloat(self.GetCommRealData(code, 290))
-            a5 = toFloat(self.GetCommRealData(code, 691))
-            high_time = toFloat(self.GetCommRealData(code, 567))
-            low_time = toFloat(self.GetCommRealData(code, 568))
+                tick_cheg = [stock_code, time, price, change_price, increase_rate,
+                            volume, cul_volume, cul_amount, open, high, low, turn_over,
+                            volume_power, capitalization]
 
-            tick_cheg = [stock_code, time, price, change_price, increase_rate, sell_1, buy_1,
-                            volume, cul_volume, cul_amount, open, high, low, plus_minus,
-                            a1, a2, a3, turn_over, a4, volume_power, capitalization,
-                            market, a5, high_time, low_time]
-
-            self.producer.send('tick.cheg', value=tick_cheg)
-            self.producer.flush()
+                self.kafka_producer.send('tick.cheg', value=tick_cheg)
+                self.kafka_producer.flush()
+            except Exception as e:
+                print(e)
 
         if real_type == "종목프로그램매매":  ##   ' won' 금액    →   단위당 백만원
-            index = int(self.stock_list.index(code))
-            stock_code = code.encode()
-            time = (self.GetCommRealData(code, 20)).encode()
-            price = toFloat(self.GetCommRealData(code, 10))
-            plus_minus = toFloat(self.GetCommRealData(code, 25))
-            change_price = toFloat(self.GetCommRealData(code, 11))
-            increase_rate = toFloat(self.GetCommRealData(code, 12))
-            cul_volume = toFloat(self.GetCommRealData(code, 13))
-            sell_volume = toFloat(self.GetCommRealData(code, 202))
-            sell_amount = toFloat(self.GetCommRealData(code, 204))
-            buy_volume = toFloat(self.GetCommRealData(code, 206))
-            buy_amount = toFloat(self.GetCommRealData(code, 208))
-            net_buy_volume = toFloat(self.GetCommRealData(code, 210))
-            net_buy_amount = toFloat(self.GetCommRealData(code, 212))
-            a1 = toFloat(self.GetCommRealData(code, 213))
-            a2 = toFloat(self.GetCommRealData(code, 214))
-            market = toFloat(self.GetCommRealData(code, 215))
-            ticker = toFloat(self.GetCommRealData(code, 216))
+            #index = int(self.stock_list.index(code))
+            try:
+                stock_code = code
+                time = self.GetCommRealData(code, 20)
+                sell_volume = toInt(self.GetCommRealData(code, 202))
+                sell_amount = toInt(self.GetCommRealData(code, 204))
+                buy_volume = toInt(self.GetCommRealData(code, 206))
+                buy_amount = toInt(self.GetCommRealData(code, 208))
+                net_buy_volume = toInt(self.GetCommRealData(code, 210))
+                net_buy_amount = toInt(self.GetCommRealData(code, 212))
 
-            tick_program = [index, stock_code, time, price, plus_minus, change_price,
-                                increase_rate, cul_volume, sell_volume, sell_amount, buy_volume,
-                                buy_amount, net_buy_volume, net_buy_amount, a1, a2, market, ticker]
+                tick_program = [stock_code, time, sell_volume, sell_amount, buy_volume,
+                                    buy_amount, net_buy_volume, net_buy_amount]
 
-            self.producer.send('tick.program', value=tick_program)
-            self.producer.flush()
+                self.kafka_producer.send('tick.program', value=tick_program)
+                self.kafka_producer.flush()
+            except Exception as e:
+                print(e)
 
         if real_type == "장시작시간":
-            gubun = self.GetCommRealData(code, 215)
+            time = self.GetCommRealData(code, 20)
+            state = self.GetCommRealData(code, 215)
             remained_time = self.GetCommRealData(code, 214)
-            print(f'businessDay_state : {gubun}, {remained_time}, [{data}]')
-            self.db_redis.set('businessDay_state', gubun)
+            print(f'businessDay_state : {state}, {time}, {remained_time}')
+            self.db_redis.set('businessDay_state', state)
+
+            tick_business = [time, state]
+
+            self.kafka_producer.send('tick.business', value=tick_business)
+            self.kafka_producer.flush()
 
     def SetRealReg(self, screen_no, code_list, fid_list, real_type):
         self.ocx.dynamicCall("SetRealReg(QString, QString, QString, QString)",
