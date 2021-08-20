@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jhk.allgo.allgo.model.entity.Portfolio;
 
+//@RepositoryDefinition(domainClass=Portfolio.class, idClass=Long.class)
 @Repository
 public interface PortfolioRepository extends JpaRepository<Portfolio, Long>{
 	

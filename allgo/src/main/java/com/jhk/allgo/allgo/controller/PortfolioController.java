@@ -9,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +33,21 @@ import lombok.RequiredArgsConstructor;
 public class PortfolioController {
 	
 	private final PortfolioService portfolioService;
+	
+	@GetMapping
+    public ResponseEntity<PortfolioResponseListDto> findByIds(@RequestParam("ids") @Nullable String portfolioIds) {
+    	
+    	if(portfolioIds == null){
+    		return portfolioService.findAll();
+    	}
+    	
+        List<Long> portfolioIdList = new ArrayList<>(Arrays.asList(portfolioIds.split(",")))
+                .stream()
+                .map(Long::parseLong)
+                .collect(Collectors.toList());
+        
+        return portfolioService.findByIds(portfolioIdList);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<PortfolioResponseDto> findById(@PathVariable("id") Long id){
@@ -43,26 +60,16 @@ public class PortfolioController {
         return portfolioService.create(request);
     }
     
-    @GetMapping("")
-    public ResponseEntity<PortfolioResponseListDto> findByIds(@RequestParam("ids") @Nullable String portfolioIds) {
-        List<Long> portfolioIdList = new ArrayList<>(Arrays.asList(portfolioIds.split(",")))
-                .stream()
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-        return portfolioService.findByIds(portfolioIdList);
-    }
-/*
-    @PutMapping("")
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ProductResponseDto> update(@RequestBody ProductRequestDto request){
-        return productService.update(request);
+    public ResponseEntity<PortfolioResponseDto> update(@RequestBody PortfolioRequestDto request){
+        return portfolioService.update(request);
     }
-
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        return productService.delete(id);
+        return portfolioService.delete(id);
     }
-
-    */
+    
     
 }
