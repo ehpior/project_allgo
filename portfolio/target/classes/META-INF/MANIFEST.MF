@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: portfolio
-Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: JHK
-Implementation-Vendor-Id: com.jhk.allgo
-Build-Jdk: 1.8.0_275
-Implementation-URL: https://spring.io/projects/spring-boot/portfolio
-Created-By: Maven Integration for Eclipse
-
