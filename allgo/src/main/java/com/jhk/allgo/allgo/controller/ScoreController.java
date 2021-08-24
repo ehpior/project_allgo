@@ -1,5 +1,8 @@
 package com.jhk.allgo.allgo.controller;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jhk.allgo.allgo.model.dto.response.PortfolioResponseDto;
-import com.jhk.allgo.allgo.service.PortfolioService;
+import com.jhk.allgo.allgo.model.dto.response.ScoreResponseListDto;
+import com.jhk.allgo.allgo.service.ScoreService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,13 +20,16 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(value = "/${app.ver}/score", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ScoreController {
 	
-	private final PortfolioService portfolioService;
+	private final ScoreService scoreService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PortfolioResponseDto> findById(@PathVariable("id") Long id){
-    	return portfolioService.findById(id);
+    /*@GetMapping("/{date:[0-9]{8}}")*/
+	@GetMapping("/{date}")
+    public ResponseEntity<ScoreResponseListDto> findByDate(
+    		@PathVariable("date") @DateTimeFormat(pattern = "yyyyMMdd") Date date){
+    	
+    	return scoreService.findByDate(date);
     }
-
+	
 /*    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ProductResponseDto> create(@RequestBody ProductRequestDto request){

@@ -9,24 +9,23 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @ApiModel
-public class PortfolioRequestDto {
+public class PortfolioViewRequestDto {
 	
-	private Long id;
-    private Integer portfolio_id;
+	private Long portfolio_id;
     
     private String allgo_type;
     
     private String stock_code;
     private String stock_name;
     
-    private Date date;
-    private Integer price;
-    private Integer target_rate;
-    private Integer loss_rate;
     private Integer holding_day;
-    private String reason;
-    private Integer percent;
-    private String type;
-    private String status;
     
+    private Integer average_buy_price;
+    private Integer average_sell_price;
+    private Integer rate;
+    
+    private Date first_buy_date;
+    private Date last_sell_date;
+    
+    private String status;
 }

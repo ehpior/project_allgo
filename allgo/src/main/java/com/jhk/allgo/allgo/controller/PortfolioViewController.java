@@ -7,18 +7,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jhk.allgo.allgo.model.dto.response.PortfolioResponseDto;
-import com.jhk.allgo.allgo.model.dto.response.PortfolioResponseListDto;
-import com.jhk.allgo.allgo.service.PortfolioService;
+import com.jhk.allgo.allgo.model.dto.response.PortfolioViewResponseDto;
+import com.jhk.allgo.allgo.service.PortfolioViewService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/${app.ver}/portfolio", produces = MediaType.APPLICATION_JSON_VALUE)
-public class PortfolioController {
+@RequestMapping(value = "/${app.ver}/portfolio-view", produces = MediaType.APPLICATION_JSON_VALUE)
+public class PortfolioViewController {
 	
-	private final PortfolioService portfolioService;
+	private final PortfolioViewService portfolioViewService;
 	
 	/*@GetMapping
     public ResponseEntity<PortfolioResponseListDto> findByIds(@RequestParam("ids") @Nullable String portfolioIds) {
@@ -36,18 +35,8 @@ public class PortfolioController {
     }*/
 
     @GetMapping("/{portfolio_id}")
-    public ResponseEntity<PortfolioResponseDto> findById(@PathVariable("portfolio_id") Long portfolio_id){
-    	return portfolioService.findById(portfolio_id);
-    }
-    
-    @GetMapping("/allgo-type/{allgo_type}")
-    public ResponseEntity<PortfolioResponseListDto> findById(@PathVariable("allgo_type") String allgo_type){
-    	return portfolioService.findByAllgoType(allgo_type);
-    }
-    
-    @GetMapping
-    public ResponseEntity<PortfolioResponseListDto> findAll(){
-    	return portfolioService.findAll();
+    public ResponseEntity<PortfolioViewResponseDto> findById(@PathVariable("portfolio_id") Long portfolio_id){
+    	return portfolioViewService.findById(portfolio_id);
     }
 
     /*@PostMapping

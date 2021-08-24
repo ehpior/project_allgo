@@ -1,7 +1,6 @@
 package com.jhk.allgo.allgo.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +12,10 @@ import com.jhk.allgo.allgo.model.entity.Portfolio;
 @Repository
 public interface PortfolioRepository extends JpaRepository<Portfolio, Long>{
 	
-	List<Optional<Portfolio>> findByIdIn(@Param("ids") List<Long> ids);
+	//List<Optional<Portfolio>> findByIdIn(@Param("ids") List<Long> ids);
+	
+	//List<Portfolio> findByStatus(@Param("status") String status);
+	
+	List<Portfolio> findByAllgoType(@Param("allgo_type") String allgo_type);
 	
 }

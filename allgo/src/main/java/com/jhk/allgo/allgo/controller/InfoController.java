@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jhk.allgo.allgo.model.dto.response.PortfolioResponseDto;
-import com.jhk.allgo.allgo.service.PortfolioService;
+import com.jhk.allgo.allgo.model.dto.response.PortfolioViewResponseDto;
+import com.jhk.allgo.allgo.service.PortfolioViewService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,10 +17,10 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(value = "/${app.ver}/info", produces = MediaType.APPLICATION_JSON_VALUE)
 public class InfoController {
 	
-	private final PortfolioService portfolioService;
+	private final PortfolioViewService portfolioService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<PortfolioResponseDto> findById(@PathVariable("id") Long id){
+    public ResponseEntity<PortfolioViewResponseDto> findById(@PathVariable("id") Long id){
     	return portfolioService.findById(id);
     }
 

@@ -1,6 +1,5 @@
 package com.jhk.allgo.allgo.model.dto.response;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
@@ -12,28 +11,25 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @ApiModel
 @Builder
-public class PortfolioResponseDto {
+public class PortfolioViewResponseDto {
 
-	private Long id;
-    private Integer portfolio_id;
+	private Long portfolio_id;
     
     private String allgo_type;
     
     private String stock_code;
     private String stock_name;
     
-    private Date date;
-    private Integer price;
-    private Integer target_rate;
-    private Integer loss_rate;
     private Integer holding_day;
-    private String reason;
-    private Integer percent;
-    private String type;
-    private String status;
     
-    private LocalDateTime create_time;
-    private LocalDateTime update_time;
+    private Integer average_buy_price;
+    private Integer average_sell_price;
+    private Integer rate;
+    
+    private Date first_buy_date;
+    private Date last_sell_date;
+    
+    private String status;
 
     /*public Portfolio responseDto2Entity(){
         return Portfolio.builder()
