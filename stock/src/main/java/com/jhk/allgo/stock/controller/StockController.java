@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/stock", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/${app.ver}", produces = MediaType.APPLICATION_JSON_VALUE)
 public class StockController {
 	
 	private final StockService stockService;

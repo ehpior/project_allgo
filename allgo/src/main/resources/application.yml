@@ -3,7 +3,7 @@ app:
   title: allgo
   
 server:
-  port: 8090
+  port: 8091
   
 spring:
   datasource:

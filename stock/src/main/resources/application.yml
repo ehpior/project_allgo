@@ -1,5 +1,9 @@
+app:
+  ver: v1.0
+  title: stock
+
 server:
-  port: 8090
+  port: 8092
   
 spring:
   datasource:
