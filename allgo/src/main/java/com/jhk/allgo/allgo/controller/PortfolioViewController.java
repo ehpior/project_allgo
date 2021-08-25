@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jhk.allgo.allgo.model.dto.response.PortfolioViewResponseDto;
+import com.jhk.allgo.allgo.model.dto.response.PortfolioViewResponseListDto;
 import com.jhk.allgo.allgo.service.PortfolioViewService;
 
 import lombok.RequiredArgsConstructor;
@@ -18,43 +19,31 @@ import lombok.RequiredArgsConstructor;
 public class PortfolioViewController {
 	
 	private final PortfolioViewService portfolioViewService;
-	
-	/*@GetMapping
-    public ResponseEntity<PortfolioResponseListDto> findByIds(@RequestParam("ids") @Nullable String portfolioIds) {
-    	
-    	if(portfolioIds == null){
-    		return portfolioService.findAll();
-    	}
-    	
-        List<Long> portfolioIdList = new ArrayList<>(Arrays.asList(portfolioIds.split(",")))
-                .stream()
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-        
-        return portfolioService.findByIds(portfolioIdList);
-    }*/
 
-    @GetMapping("/{portfolio_id}")
+	@GetMapping
+	public ResponseEntity<PortfolioViewResponseListDto> findAll(){
+		return portfolioViewService.findAll();
+	}
+	
+	@GetMapping("/{portfolio_id}")
     public ResponseEntity<PortfolioViewResponseDto> findById(@PathVariable("portfolio_id") Long portfolio_id){
     	return portfolioViewService.findById(portfolio_id);
     }
-
-    /*@PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<PortfolioResponseDto> create(@RequestBody PortfolioRequestDto request){
-        return portfolioService.create(request);
+	
+	@GetMapping("/allgo-type/{allgo_type}")
+    public ResponseEntity<PortfolioViewResponseListDto> findByAllgoType(@PathVariable("allgo_type") String allgo_type){
+    	return portfolioViewService.findByAllgoType(allgo_type);
     }
-    
-    @PutMapping
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<PortfolioResponseDto> update(@RequestBody PortfolioRequestDto request){
-        return portfolioService.update(request);
+	
+	@GetMapping("/allgo-type/{allgo_type}/status/{status}")
+    public ResponseEntity<PortfolioViewResponseListDto> findByAllgoTypeAndStatus(
+    		@PathVariable("allgo_type") String allgo_type, @PathVariable("status") String status){
+    	return portfolioViewService.findByAllgoTypeAndStatus(allgo_type, status);
     }
-    
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        return portfolioService.delete(id);
-    }*/
-    
+	
+	@GetMapping("/status/{status}")
+    public ResponseEntity<PortfolioViewResponseListDto> findByStatus(@PathVariable("status") String status){
+    	return portfolioViewService.findByStatus(status);
+    }
     
 }

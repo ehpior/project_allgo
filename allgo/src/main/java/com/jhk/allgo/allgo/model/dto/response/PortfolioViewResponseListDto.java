@@ -12,5 +12,5 @@ import lombok.experimental.Accessors;
 @ApiModel
 @Builder
 public class PortfolioViewResponseListDto {
-	private List<PortfolioViewResponseDto> portfolioResponseDtoList;
+	private List<PortfolioViewResponseDto> portfolioViewResponseDtoList;
 }

@@ -25,6 +25,36 @@ public class PortfolioService {
 	
 	private final PortfolioRepository portfolioRepository;
 	
+	/**
+	 * 전체 포트폴리오 조회
+	 * @return
+	 */
+	public ResponseEntity<PortfolioResponseListDto> findAll() {
+        List<Portfolio> list = portfolioRepository.findAll();
+        
+        return ResponseEntity.ok().body(PortfolioResponseListDto.builder()
+                .portfolioResponseDtoList(list.stream().map(portfolio ->
+	                PortfolioResponseDto.builder()
+		                .id(portfolio.getId())
+	                    .portfolio_id(portfolio.getPortfolioId())
+	                    .allgo_type(portfolio.getAllgoType())
+	                    .stock_code(portfolio.getStockCode())
+	                    .stock_name(portfolio.getStockName())
+	                    .date(portfolio.getDate())
+	                    .price(portfolio.getPrice())
+	                    .target_rate(portfolio.getTargetRate())
+	                    .loss_rate(portfolio.getLossRate())
+	                    .holding_day(portfolio.getHoldingDay())
+	                    .reason(portfolio.getReason())
+	                    .percent(portfolio.getPercent())
+	                    .type(portfolio.getType())
+	                    .status(portfolio.getStatus())
+	                    .create_time(portfolio.getCreateTime())
+	                    .update_time(portfolio.getUpdateTime())
+	                    .build())
+	            	.collect(Collectors.toList()))
+                .build());
+    }
 	
 	/**
 	 * ID 통한 포트폴리오 단 건 조회
@@ -93,41 +123,9 @@ public class PortfolioService {
                 .build());
     }
 	
-	/**
-	 * 전체 포트폴리오 조회
-	 * @return
-	 */
-	public ResponseEntity<PortfolioResponseListDto> findAll() {
-        List<Portfolio> list = portfolioRepository.findAll();
-        
-        return ResponseEntity.ok().body(PortfolioResponseListDto.builder()
-                .portfolioResponseDtoList(list.stream().map(portfolio ->
-	                PortfolioResponseDto.builder()
-		                .id(portfolio.getId())
-	                    .portfolio_id(portfolio.getPortfolioId())
-	                    .allgo_type(portfolio.getAllgoType())
-	                    .stock_code(portfolio.getStockCode())
-	                    .stock_name(portfolio.getStockName())
-	                    .date(portfolio.getDate())
-	                    .price(portfolio.getPrice())
-	                    .target_rate(portfolio.getTargetRate())
-	                    .loss_rate(portfolio.getLossRate())
-	                    .holding_day(portfolio.getHoldingDay())
-	                    .reason(portfolio.getReason())
-	                    .percent(portfolio.getPercent())
-	                    .type(portfolio.getType())
-	                    .status(portfolio.getStatus())
-	                    .create_time(portfolio.getCreateTime())
-	                    .update_time(portfolio.getUpdateTime())
-	                    .build())
-	            	.collect(Collectors.toList()))
-                .build());
-    }
-	
 	public ResponseEntity<PortfolioResponseDto> create(PortfolioRequestDto portfolio) {
         Portfolio newProduct = portfolioRepository.save(
                 Portfolio.builder()
-	                .id(portfolio.getId())
 	                .portfolioId(portfolio.getPortfolio_id())
 	                .allgoType(portfolio.getAllgo_type())
 	                .stockCode(portfolio.getStock_code())
@@ -166,8 +164,8 @@ public class PortfolioService {
                 );
     }
 	
-	public ResponseEntity<PortfolioResponseDto> update(PortfolioRequestDto request) {
-        Optional<Portfolio> option = portfolioRepository.findById(request.getId());
+	public ResponseEntity<PortfolioResponseDto> update(PortfolioRequestDto request, Long id) {
+        Optional<Portfolio> option = portfolioRepository.findById(id);
         
         return option.map(portfolio -> {
         	portfolio.setPortfolioId(request.getPortfolio_id());
