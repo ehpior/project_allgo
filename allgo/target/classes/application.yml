@@ -1,11 +1,12 @@
 app:
   ver: v1.0
-  title: allgo
   
 server:
   port: 8091
   
 spring:
+  application:
+    name: allgo-service
   datasource:
     url: jdbc:mariadb://1.240.167.231/allgo?autoReconnect=true
     #url: jdbc:mariadb://127.0.0.1/allgo?autoReconnect=true
@@ -16,6 +17,16 @@ spring:
     #hibernate:
       #naming:
         #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+eureka:
+  instance:
+    instance-id: allgo-microservice-instance
+    
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
 
     
 #logging:

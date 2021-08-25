@@ -1,17 +1,28 @@
 app:
   ver: v1.0
-  title: stock
 
 server:
   port: 8092
   
 spring:
+  application:
+    name: stock-service
   datasource:
     url: jdbc:mariadb://1.240.167.231/allgo?autoReconnect=true
     #url: jdbc:mariadb://127.0.0.1/allgo?autoReconnect=true
     username: jhk
     password: wjdgusrl34
     driver-class-name: org.mariadb.jdbc.Driver
+
+eureka:
+  instance:
+    instance-id: stock-microservice-instance
+    
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
   
 kafka:
   topic: 

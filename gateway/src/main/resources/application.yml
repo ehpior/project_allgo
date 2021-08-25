@@ -2,6 +2,8 @@ server:
   port: 8090
 
 spring:
+  application:
+    name: gateway-service
   cloud:
     gateway:
       default-filters:
@@ -11,8 +13,8 @@ spring:
             preLogger: true
             postLogger: true
       routes:
-        - id: allgo
-          uri: http://localhost:8091/
+        - id: allgo-service
+          uri: lb://ALLGO-SERVICE
           predicates:
             - Path=/allgo/**
           filters:
@@ -23,8 +25,8 @@ spring:
                 postLogger: true
             - RewritePath=/allgo/(?<apiuri>.*), /${apiuri}
             - PrefixPath=/v1.0
-        - id: stock
-          uri: http://localhost:8092/
+        - id: stock-service
+          uri: lb://STOCK-SERVICE
           predicates:
             - Path=/stock/**
           filters:
@@ -35,3 +37,13 @@ spring:
                 postLogger: true
             - RewritePath=/stock/(?<apiuri>.*), /${apiuri}
             - PrefixPath=/v1.0
+            
+eureka:
+  instance:
+    instance-id: gateway-microservice-instance
+    
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
