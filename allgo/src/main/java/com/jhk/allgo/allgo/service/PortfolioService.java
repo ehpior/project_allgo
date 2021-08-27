@@ -182,27 +182,27 @@ public class PortfolioService {
         	portfolio.setType(request.getType());
         	portfolio.setStatus(request.getStatus());
         	
-        	portfolioRepository.save(portfolio);
+        	Portfolio savedPortfolio = portfolioRepository.save(portfolio);
         	
         	return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(PortfolioResponseDto.builder()
-                    		.id(portfolio.getId())
-    	                    .portfolio_id(portfolio.getPortfolioId())
-    	                    .allgo_type(portfolio.getAllgoType())
-    	                    .stock_code(portfolio.getStockCode())
-    	                    .stock_name(portfolio.getStockName())
-    	                    .date(portfolio.getDate())
-    	                    .price(portfolio.getPrice())
-    	                    .target_rate(portfolio.getTargetRate())
-    	                    .loss_rate(portfolio.getLossRate())
-    	                    .holding_day(portfolio.getHoldingDay())
-    	                    .reason(portfolio.getReason())
-    	                    .percent(portfolio.getPercent())
-    	                    .type(portfolio.getType())
-    	                    .status(portfolio.getStatus())
-    	                    .create_time(portfolio.getCreateTime())
-    	                    .update_time(portfolio.getUpdateTime())
+                    		.id(savedPortfolio.getId())
+    	                    .portfolio_id(savedPortfolio.getPortfolioId())
+    	                    .allgo_type(savedPortfolio.getAllgoType())
+    	                    .stock_code(savedPortfolio.getStockCode())
+    	                    .stock_name(savedPortfolio.getStockName())
+    	                    .date(savedPortfolio.getDate())
+    	                    .price(savedPortfolio.getPrice())
+    	                    .target_rate(savedPortfolio.getTargetRate())
+    	                    .loss_rate(savedPortfolio.getLossRate())
+    	                    .holding_day(savedPortfolio.getHoldingDay())
+    	                    .reason(savedPortfolio.getReason())
+    	                    .percent(savedPortfolio.getPercent())
+    	                    .type(savedPortfolio.getType())
+    	                    .status(savedPortfolio.getStatus())
+    	                    .create_time(savedPortfolio.getCreateTime())
+    	                    .update_time(savedPortfolio.getUpdateTime())
     	                    .build());
         	})
         		.orElseThrow(CommonNotFoundException::new);

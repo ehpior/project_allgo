@@ -23,6 +23,4 @@ public class ScoreRequestDto {
 	private String code;
 	
 	private double score;
-	private int rank;
-	private LocalDateTime create_time;
 }

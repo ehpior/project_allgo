@@ -17,4 +17,9 @@ public interface ScoreRepository extends JpaRepository<Score, DateTypeCodePK>{
 	
 	List<Optional<Score>> findByDate(@Param("date") Date date);
 	
+	List<Optional<Score>> findByCode(@Param("code") String code);
+	
+	void deleteByDateAndType(@Param("date") Date date, @Param("type") String type);
+	void deleteByDate(@Param("date") Date date);
+	
 }

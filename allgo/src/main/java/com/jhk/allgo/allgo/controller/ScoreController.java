@@ -3,14 +3,25 @@ package com.jhk.allgo.allgo.controller;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jhk.allgo.allgo.exception.CommonConstraintViolationException;
+import com.jhk.allgo.allgo.model.dto.request.ScoreRequestDto;
+import com.jhk.allgo.allgo.model.dto.response.ScoreResponseDto;
 import com.jhk.allgo.allgo.model.dto.response.ScoreResponseListDto;
+import com.jhk.allgo.allgo.model.entity.id.DateTypeCodePK;
 import com.jhk.allgo.allgo.service.ScoreService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,37 +34,46 @@ public class ScoreController {
 	private final ScoreService scoreService;
 
     /*@GetMapping("/{date:[0-9]{8}}")*/
-	@GetMapping("/{date}")
+	@GetMapping("/type/{type}")
     public ResponseEntity<ScoreResponseListDto> findByDate(
-    		@PathVariable("date") @DateTimeFormat(pattern = "yyyyMMdd") Date date){
-    	
-    	return scoreService.findByDate(date);
+    		@RequestParam("date") @Nullable @DateTimeFormat(pattern = "yyyyMMdd") Date date,
+    		@RequestParam("code") @Nullable String code){
+		
+		if(date == null && code != null){
+			return scoreService.findByDate(date);
+		} else if(date != null && code == null){
+			return scoreService.findByCode(code);
+		} else{
+			throw new CommonConstraintViolationException();
+		}
+		
     }
 	
-/*    @PostMapping
+    @PostMapping("/date/{date}/type/{type}/code/{code}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ProductResponseDto> create(@RequestBody ProductRequestDto request){
-        return productService.create(request);
+    public ResponseEntity<ScoreResponseDto> create(DateTypeCodePK dateTypeCode, @RequestBody ScoreRequestDto request){
+        return scoreService.create(dateTypeCode, request);
     }
 
-    @PutMapping("")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ProductResponseDto> update(@RequestBody ProductRequestDto request){
-        return productService.update(request);
+    @PutMapping("/date/{date}/type/{type}/code/{code}")
+    public ResponseEntity<ScoreResponseDto> update(DateTypeCodePK dateTypeCode, @RequestBody ScoreRequestDto request){
+    	
+        return scoreService.update(dateTypeCode, request);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        return productService.delete(id);
+    @DeleteMapping("/date/{date}/type/{type}/code/{code}")
+    public ResponseEntity<String> delete(DateTypeCodePK dateTypeCode){
+        return scoreService.delete(dateTypeCode);
     }
-
-    @GetMapping("")
-    public ResponseEntity<ProductResponseListDto> readByIds(@RequestParam("ids") String productIds) {
-        List<Long> productIdList = new ArrayList<>(Arrays.asList(productIds.split(",")))
-                .stream()
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-        return productService.findByIds(productIdList);
-    }*/
+    
+    @DeleteMapping("/date/{date}/type/{type}")
+    public ResponseEntity<String> deleteByDateAndType(DateTypeCodePK dateTypeCode){
+        return scoreService.deleteByDateAndType(dateTypeCode);
+    }
+    
+    @DeleteMapping("/date/{date}")
+    public ResponseEntity<String> deleteByDate(DateTypeCodePK dateTypeCode){
+        return scoreService.deleteByDate(dateTypeCode);
+    }
     
 }

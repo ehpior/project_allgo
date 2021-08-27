@@ -1,5 +1,6 @@
 package com.jhk.allgo.allgo.model.dto.response;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -21,6 +22,8 @@ public class ScoreResponseDto {
 	private String code;
 	
 	private double score;
-	private int rank;
+	
+	private LocalDateTime create_time;
+    private LocalDateTime update_time;
 
 }

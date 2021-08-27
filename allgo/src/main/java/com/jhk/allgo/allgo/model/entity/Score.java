@@ -4,9 +4,14 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.jhk.allgo.allgo.model.entity.id.DateTypeCodePK;
 
@@ -24,6 +29,7 @@ import lombok.experimental.Accessors;
 @Builder
 @Accessors(chain = true)
 @ApiModel
+@EntityListeners(AuditingEntityListener.class)
 @Table(name="score")
 @IdClass(DateTypeCodePK.class)
 public class Score {
@@ -36,8 +42,11 @@ public class Score {
 	private String code;
 	
 	private double score;
-	private int rank;
-	private LocalDateTime create_time;
+	
+	@CreatedDate
+    private LocalDateTime createTime;
+    @LastModifiedDate
+    private LocalDateTime updateTime;
 	
 	
 }
