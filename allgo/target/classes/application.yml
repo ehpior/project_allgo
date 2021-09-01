@@ -8,7 +8,7 @@ spring:
   application:
     name: allgo-service
   datasource:
-    url: jdbc:mariadb://1.240.167.231/allgo?autoReconnect=true
+    url: jdbc:mariadb://jhk-db.cjvrebigithi.ap-northeast-2.rds.amazonaws.com/allgo?autoReconnect=true
     #url: jdbc:mariadb://127.0.0.1/allgo?autoReconnect=true
     username: jhk
     password: wjdgusrl34
