@@ -16,27 +16,28 @@ spring:
         - id: allgo-service
           uri: lb://ALLGO-SERVICE
           predicates:
-            - Path=/allgo/**
+            - Path=/allgo/**, /api-docs/allgo/**
           filters:
             - name: AllgoFilter
               args:
                 baseMessage: Spring Cloud Gateway AllgoFilter
                 preLogger: true
                 postLogger: true
-            - RewritePath=/allgo/(?<apiuri>.*), /${apiuri}
-            - PrefixPath=/v1.0
+            - RewritePath=^/allgo/(?<apiuri>.*), /v1.0/${apiuri}
+            - RewritePath=^/api-docs/allgo/(?<apiuri>.*), /${apiuri}
         - id: stock-service
           uri: lb://STOCK-SERVICE
           predicates:
-            - Path=/stock/**
+            - Path=/stock/**, /api-docs/stock/**
           filters:
             - name: StockFilter
               args:
                 baseMessage: Spring Cloud Gateway StockFilter
                 preLogger: true
                 postLogger: true
-            - RewritePath=/stock/(?<apiuri>.*), /${apiuri}
-            - PrefixPath=/v1.0
+            - RewritePath=^/stock/(?<apiuri>.*), /v1.0/${apiuri}
+            - RewritePath=^/api-docs/stock/(?<apiuri>.*), /${apiuri}
+            #- PrefixPath=/v1.0
             
 eureka:
   instance:
@@ -46,4 +47,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://1.240.167.231:8761/eureka

@@ -3,7 +3,7 @@ package com.jhk.allgo.discovery;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class DiscoveryApplicationTests {
 
 	@Test

@@ -6,6 +6,8 @@ spring:
     name: discovery-service # 2번
 
 eureka:
+  instance:
+    ipAddress: 1.240.167.231
   client:
     register-with-eureka: false # 3번
     fetch-registry: false  # 4번

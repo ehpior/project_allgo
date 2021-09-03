@@ -18,6 +18,12 @@ spring:
       #naming:
         #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /${app.ver}/api-docs
+
 eureka:
   instance:
     instance-id: allgo-microservice-instance
@@ -26,7 +32,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://1.240.167.231:8761/eureka
 
     
 #logging:

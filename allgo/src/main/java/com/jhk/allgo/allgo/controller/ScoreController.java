@@ -24,8 +24,10 @@ import com.jhk.allgo.allgo.model.dto.response.ScoreResponseListDto;
 import com.jhk.allgo.allgo.model.entity.id.DateTypeCodePK;
 import com.jhk.allgo.allgo.service.ScoreService;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = "allgo.score")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/${app.ver}/score", produces = MediaType.APPLICATION_JSON_VALUE)

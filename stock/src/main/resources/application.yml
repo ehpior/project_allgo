@@ -14,6 +14,12 @@ spring:
     password: wjdgusrl34
     driver-class-name: org.mariadb.jdbc.Driver
 
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /${app.ver}/api-docs
+
 eureka:
   instance:
     instance-id: stock-microservice-instance
@@ -22,7 +28,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://1.240.167.231:8761/eureka
   
 kafka:
   topic: 
@@ -30,6 +36,7 @@ kafka:
     program: tick.program
     business: tick.business
   bootstrap: 1.240.167.231:9092
+  #bootstrap: 127.0.0.1:19092
   group: stock.group
     
 #logging:

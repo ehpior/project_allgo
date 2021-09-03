@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jhk.allgo.allgo.model.dto.response.PortfolioViewResponseDto;
 import com.jhk.allgo.allgo.service.PortfolioViewService;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import springfox.documentation.annotations.ApiIgnore;
 
+@Api(tags = "allgo.info")
+@ApiIgnore
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/${app.ver}/info", produces = MediaType.APPLICATION_JSON_VALUE)

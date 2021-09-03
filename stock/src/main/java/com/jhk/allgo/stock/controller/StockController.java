@@ -12,8 +12,10 @@ import com.jhk.allgo.stock.model.dto.TickChegDto;
 import com.jhk.allgo.stock.model.dto.TickProgramDto;
 import com.jhk.allgo.stock.service.StockService;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = "stock")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/${app.ver}", produces = MediaType.APPLICATION_JSON_VALUE)

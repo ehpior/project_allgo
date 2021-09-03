@@ -18,8 +18,10 @@ import com.jhk.allgo.allgo.model.dto.response.PortfolioResponseDto;
 import com.jhk.allgo.allgo.model.dto.response.PortfolioResponseListDto;
 import com.jhk.allgo.allgo.service.PortfolioService;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = "allgo.portfolio")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/${app.ver}/portfolio", produces = MediaType.APPLICATION_JSON_VALUE)
