@@ -27,6 +27,7 @@ springfox:
 eureka:
   instance:
     instance-id: allgo-microservice-instance
+    hostname: 1.240.167.231
     
   client:
     register-with-eureka: true
