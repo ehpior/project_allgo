@@ -2,9 +2,9 @@ spring:
   application:
     name: allgo-service
   profiles:
-    active: test
+    active: dev
   config:
-    import: configserver:http://1.240.167.231:8099
+    import: configserver:http://127.0.0.1:8099
 
 management:
   endpoints:

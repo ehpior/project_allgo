@@ -1,13 +1,14 @@
-server:    
-  port: 8761 # 1번
-
-spring: 
+spring:
   application:
-    name: discovery-service # 2번
+    name: discovery-service
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://127.0.0.1:8099
 
-eureka:
-  instance:
-    ipAddress: 1.240.167.231
-  client:
-    register-with-eureka: false # 3번
-    fetch-registry: false  # 4번
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+

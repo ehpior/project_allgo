@@ -1,51 +1,14 @@
-server:
-  port: 8090
-
 spring:
   application:
     name: gateway-service
-  cloud:
-    gateway:
-      default-filters:
-        - name: GlobalFilter
-          args:
-            baseMessage: Spring Cloud Gateway GlobalFilter
-            preLogger: true
-            postLogger: true
-      routes:
-        - id: allgo-service
-          uri: lb://ALLGO-SERVICE
-          predicates:
-            - Path=/allgo/**, /api-docs/allgo/**
-          filters:
-            - name: AllgoFilter
-              args:
-                baseMessage: Spring Cloud Gateway AllgoFilter
-                preLogger: true
-                postLogger: true
-            - RewritePath=^/allgo/(?<apiuri>.*), /v1.0/${apiuri}
-            - RewritePath=^/api-docs/allgo/(?<apiuri>.*), /${apiuri}
-        - id: stock-service
-          uri: lb://STOCK-SERVICE
-          predicates:
-            - Path=/stock/**, /api-docs/stock/**
-          filters:
-            - name: StockFilter
-              args:
-                baseMessage: Spring Cloud Gateway StockFilter
-                preLogger: true
-                postLogger: true
-            - RewritePath=^/stock/(?<apiuri>.*), /v1.0/${apiuri}
-            - RewritePath=^/api-docs/stock/(?<apiuri>.*), /${apiuri}
-            #- PrefixPath=/v1.0
-            
-eureka:
-  instance:
-    instance-id: gateway-microservice-instance
-    hostname: 1.240.167.231
-    
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://1.240.167.231:8761/eureka
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://127.0.0.1:8099
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+

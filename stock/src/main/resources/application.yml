@@ -1,50 +1,14 @@
-app:
-  ver: v1.0
-
-server:
-  port: 8092
-  
 spring:
   application:
     name: stock-service
-  datasource:
-    url: jdbc:mariadb://jhk-db.cjvrebigithi.ap-northeast-2.rds.amazonaws.com/allgo?autoReconnect=true
-    #url: jdbc:mariadb://127.0.0.1/allgo?autoReconnect=true
-    username: jhk
-    password: wjdgusrl34
-    driver-class-name: org.mariadb.jdbc.Driver
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://127.0.0.1:8099
 
-springfox:
-  documentation:
-    swagger:
-      v2:
-        path: /${app.ver}/api-docs
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
-eureka:
-  instance:
-    instance-id: stock-microservice-instance
-    hostname: 1.240.167.231
-    
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://1.240.167.231:8761/eureka
-  
-kafka:
-  topic: 
-    cheg: tick.cheg
-    program: tick.program
-    business: tick.business
-  bootstrap: 1.240.167.231:9092
-  #bootstrap: 127.0.0.1:19092
-  group: stock.group
-    
-#logging:
-  #file:
-    #name: ${user.dir}/log/test.log  # 로깅 파일 위치이다.
-    #max-history: 7 # 로그 파일 삭제 주기이다. 7일 이후 로그는 삭제한다.
-    #max-size: 10MB  # 로그 파일 하나당 최대 파일 사이즈이다.
-  #level:  # 각 package 별로 로깅 레벨을 지정할 수 있다.
-    #com.project.study : error
-    #com.project.study.controller : debug
