@@ -1,46 +1,14 @@
-app:
-  ver: v1.0
-  
-server:
-  port: 8091
-  
 spring:
   application:
     name: allgo-service
-  datasource:
-    url: jdbc:mariadb://jhk-db.cjvrebigithi.ap-northeast-2.rds.amazonaws.com/allgo?autoReconnect=true
-    #url: jdbc:mariadb://127.0.0.1/allgo?autoReconnect=true
-    username: jhk
-    password: wjdgusrl34
-    driver-class-name: org.mariadb.jdbc.Driver
-  #jpa:
-    #hibernate:
-      #naming:
-        #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  profiles:
+    active: test
+  config:
+    import: configserver:http://1.240.167.231:8099
 
-springfox:
-  documentation:
-    swagger:
-      v2:
-        path: /${app.ver}/api-docs
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
-eureka:
-  instance:
-    instance-id: allgo-microservice-instance
-    hostname: 1.240.167.231
-    
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://1.240.167.231:8761/eureka
-
-    
-#logging:
-  #file:
-    #name: ${user.dir}/log/test.log  # 로깅 파일 위치이다.
-    #max-history: 7 # 로그 파일 삭제 주기이다. 7일 이후 로그는 삭제한다.
-    #max-size: 10MB  # 로그 파일 하나당 최대 파일 사이즈이다.
-  #level:  # 각 package 별로 로깅 레벨을 지정할 수 있다.
-    #com.project.study : error
-    #com.project.study.controller : debug

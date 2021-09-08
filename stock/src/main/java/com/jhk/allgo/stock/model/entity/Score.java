@@ -1,4 +1,4 @@
-package com.jhk.allgo.allgo.model.entity;
+package com.jhk.allgo.stock.model.entity;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -13,7 +13,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.jhk.allgo.allgo.model.entity.id.DateTypeCodePK;
+import com.jhk.allgo.stock.model.entity.id.DateTypeCodePK;
 
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;

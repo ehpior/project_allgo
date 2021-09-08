@@ -1,4 +1,4 @@
-package com.jhk.allgo.allgo.model.dto.response;
+package com.jhk.allgo.stock.model.dto.response;
 
 import java.util.List;
 

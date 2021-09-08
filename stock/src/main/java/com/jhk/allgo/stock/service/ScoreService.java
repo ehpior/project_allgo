@@ -1,4 +1,4 @@
-package com.jhk.allgo.allgo.service;
+package com.jhk.allgo.stock.service;
 
 import java.util.Date;
 import java.util.List;
@@ -10,14 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.jhk.allgo.allgo.exception.CommonConstraintViolationException;
-import com.jhk.allgo.allgo.exception.CommonNotFoundException;
-import com.jhk.allgo.allgo.model.dto.request.ScoreRequestDto;
-import com.jhk.allgo.allgo.model.dto.response.ScoreResponseDto;
-import com.jhk.allgo.allgo.model.dto.response.ScoreResponseListDto;
-import com.jhk.allgo.allgo.model.entity.Score;
-import com.jhk.allgo.allgo.model.entity.id.DateTypeCodePK;
-import com.jhk.allgo.allgo.repository.ScoreRepository;
+import com.jhk.allgo.stock.exception.CommonConstraintViolationException;
+import com.jhk.allgo.stock.exception.CommonNotFoundException;
+import com.jhk.allgo.stock.model.dto.request.ScoreRequestDto;
+import com.jhk.allgo.stock.model.dto.response.ScoreResponseDto;
+import com.jhk.allgo.stock.model.dto.response.ScoreResponseListDto;
+import com.jhk.allgo.stock.model.entity.Score;
+import com.jhk.allgo.stock.model.entity.id.DateTypeCodePK;
+import com.jhk.allgo.stock.repository.ScoreRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.jhk.allgo.allgo.model.dto.request;
+package com.jhk.allgo.stock.model.dto.request;
 
 import java.time.LocalDateTime;
 import java.util.Date;

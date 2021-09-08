@@ -1,4 +1,4 @@
-package com.jhk.allgo.allgo.repository;
+package com.jhk.allgo.stock.repository;
 
 import java.util.Date;
 import java.util.List;
@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.jhk.allgo.allgo.model.entity.Score;
-import com.jhk.allgo.allgo.model.entity.id.DateTypeCodePK;
+import com.jhk.allgo.stock.model.entity.Score;
+import com.jhk.allgo.stock.model.entity.id.DateTypeCodePK;
 
 //@RepositoryDefinition(domainClass=Portfolio.class, idClass=Long.class)
 @Repository

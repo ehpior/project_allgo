@@ -1,4 +1,4 @@
-package com.jhk.allgo.allgo.controller;
+package com.jhk.allgo.stock.controller;
 
 import java.util.Date;
 
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jhk.allgo.allgo.exception.CommonConstraintViolationException;
-import com.jhk.allgo.allgo.model.dto.request.ScoreRequestDto;
-import com.jhk.allgo.allgo.model.dto.response.ScoreResponseDto;
-import com.jhk.allgo.allgo.model.dto.response.ScoreResponseListDto;
-import com.jhk.allgo.allgo.model.entity.id.DateTypeCodePK;
-import com.jhk.allgo.allgo.service.ScoreService;
+import com.jhk.allgo.stock.exception.CommonConstraintViolationException;
+import com.jhk.allgo.stock.model.dto.request.ScoreRequestDto;
+import com.jhk.allgo.stock.model.dto.response.ScoreResponseDto;
+import com.jhk.allgo.stock.model.dto.response.ScoreResponseListDto;
+import com.jhk.allgo.stock.model.entity.id.DateTypeCodePK;
+import com.jhk.allgo.stock.service.ScoreService;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
