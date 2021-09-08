@@ -1,0 +1,15 @@
+server:
+  port: 8099
+  
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      profile: dev
+      server:
+        git:
+          uri: https://github.com/ehpior/project_allgo_config
+          
+encrypt:
+  key: wjdgusrl34
