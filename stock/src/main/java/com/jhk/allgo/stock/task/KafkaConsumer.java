@@ -98,7 +98,7 @@ public class KafkaConsumer {
 					.build();*/
 			
 			tickBusiness.setTime(jAry.getString(0));
-			tickBusiness.setState(jAry.getString(1));
+			tickBusiness.setState(jAry.getInt(1));
 			
 			System.out.println(tickBusiness.toString());
 			

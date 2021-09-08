@@ -14,7 +14,7 @@ import lombok.Setter;
 public class TickBusinessDto {
 	
 	private String time = "";
-	private String state = "";
+	private int state = 9;
 	
 	@Override
 	public String toString() {
@@ -22,7 +22,7 @@ public class TickBusinessDto {
 	}
 	
 	@Builder
-	public TickBusinessDto(String time, String state) {
+	public TickBusinessDto(String time, int state) {
 		this.time = time;
 		this.state = state;
 	}
