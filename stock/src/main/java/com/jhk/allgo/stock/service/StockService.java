@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.jhk.allgo.stock.exception.CommonNotFoundException;
-import com.jhk.allgo.stock.model.dto.TickBusinessDto;
-import com.jhk.allgo.stock.model.dto.TickChegDto;
-import com.jhk.allgo.stock.model.dto.TickProgramDto;
+import com.jhk.allgo.stock.model.dto.BusinessDto;
+import com.jhk.allgo.stock.model.dto.ChegDto;
+import com.jhk.allgo.stock.model.dto.ProgramDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,15 +18,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StockService {
 	
-	private final HashMap<String, TickChegDto> tickCheg;
+	private final HashMap<String, ChegDto> tickCheg;
 	
-	private final HashMap<String, TickProgramDto> tickProgram;
+	private final HashMap<String, ProgramDto> tickProgram;
 	
-	private final TickBusinessDto tickBusiness;
+	private final BusinessDto tickBusiness;
 	
-	public ResponseEntity<TickChegDto> findChegBycode(String code) {
+	public ResponseEntity<ChegDto> findChegBycode(String code) {
 		
-		Optional<TickChegDto> option = Optional.ofNullable(tickCheg.get(code));
+		Optional<ChegDto> option = Optional.ofNullable(tickCheg.get(code));
 		
 		return option.map(tickCheg -> ResponseEntity
                 .status(HttpStatus.OK)
@@ -42,9 +42,9 @@ public class StockService {
                 .orElseThrow(PortfolioNotFoundException::new);*/
     }
 	
-	public ResponseEntity<TickProgramDto> findProgramBycode(String code) {
+	public ResponseEntity<ProgramDto> findProgramBycode(String code) {
 		
-		Optional<TickProgramDto> option = Optional.ofNullable(tickProgram.get(code));
+		Optional<ProgramDto> option = Optional.ofNullable(tickProgram.get(code));
 		
 		return option.map(tickProgram -> ResponseEntity
                 .status(HttpStatus.OK)
@@ -52,9 +52,9 @@ public class StockService {
                 .orElseThrow(CommonNotFoundException::new);
 	}
 	
-	public ResponseEntity<TickBusinessDto> getBusiness() {
+	public ResponseEntity<BusinessDto> getBusiness() {
 		
-		Optional<TickBusinessDto> option = Optional.ofNullable(tickBusiness);
+		Optional<BusinessDto> option = Optional.ofNullable(tickBusiness);
 		
 		return option.map(tickCheg -> ResponseEntity
                 .status(HttpStatus.OK)

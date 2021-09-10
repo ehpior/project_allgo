@@ -5,9 +5,9 @@ import java.util.HashMap;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.jhk.allgo.stock.model.dto.TickBusinessDto;
-import com.jhk.allgo.stock.model.dto.TickChegDto;
-import com.jhk.allgo.stock.model.dto.TickProgramDto;
+import com.jhk.allgo.stock.model.dto.BusinessDto;
+import com.jhk.allgo.stock.model.dto.ChegDto;
+import com.jhk.allgo.stock.model.dto.ProgramDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,11 +15,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ScheduledTask {
 	
-	private final HashMap<String, TickChegDto> tickCheg;
+	private final HashMap<String, ChegDto> tickCheg;
 	
-	private final HashMap<String, TickProgramDto> tickProgram;
+	private final HashMap<String, ProgramDto> tickProgram;
 	
-	private final TickBusinessDto tickBusiness;
+	private final BusinessDto tickBusiness;
 	
 	@Scheduled(cron = "0 40 15 * * *" , zone = "Asia/Seoul")
 	public void dataSave(){

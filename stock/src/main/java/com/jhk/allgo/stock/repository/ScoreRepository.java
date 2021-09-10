@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.jhk.allgo.stock.model.entity.Score;
 import com.jhk.allgo.stock.model.entity.id.DateTypeCodePK;
 
-//@RepositoryDefinition(domainClass=Portfolio.class, idClass=Long.class)
 @Repository
 public interface ScoreRepository extends JpaRepository<Score, DateTypeCodePK>{
 	

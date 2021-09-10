@@ -1,4 +1,4 @@
-package com.jhk.allgo.stock.model.entity;
+package com.jhk.allgo.stock.model.entity.id;
 
 import java.time.LocalDateTime;
 

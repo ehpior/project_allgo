@@ -126,7 +126,7 @@ class MyWindow(QMainWindow):
         print(tick_cheg)
 
         try:
-            self.kafka_producer.send('tick.cheg', value=tick_cheg)
+            self.kafka_producer.send('stock.cheg', value=tick_cheg)
             self.kafka_producer.flush()
         except Exception as e:
             print(e)
@@ -135,7 +135,7 @@ class MyWindow(QMainWindow):
         tick_program = stockData.test_program_data(self.ret)
 
         try:
-            self.kafka_producer.send('tick.program', value=tick_program)
+            self.kafka_producer.send('stock.program', value=tick_program)
             self.kafka_producer.flush()
         except Exception as e:
             print(e)
@@ -144,7 +144,7 @@ class MyWindow(QMainWindow):
         tick_business = ['143050', '9']
 
         try:
-            self.kafka_producer.send('tick.business', value=tick_business)
+            self.kafka_producer.send('stock.business', value=tick_business)
             self.kafka_producer.flush()
         except Exception as e:
             print(e)
@@ -180,7 +180,8 @@ class MyWindow(QMainWindow):
                             volume, cul_volume, cul_amount, open, high, low, turn_over,
                             volume_power, capitalization]
 
-                self.kafka_producer.send('tick.cheg', value=tick_cheg)
+                self.kafka_producer.send('stock.cheg', value=tick_cheg)
+                self.kafka_producer.send('stock.price', value=[stock_code, time, price])
                 self.kafka_producer.flush()
             except Exception as e:
                 print(e)
@@ -200,7 +201,7 @@ class MyWindow(QMainWindow):
                 tick_program = [stock_code, time, sell_volume, sell_amount, buy_volume,
                                     buy_amount, net_buy_volume, net_buy_amount]
 
-                self.kafka_producer.send('tick.program', value=tick_program)
+                self.kafka_producer.send('stock.program', value=tick_program)
                 self.kafka_producer.flush()
             except Exception as e:
                 print(e)
@@ -214,7 +215,7 @@ class MyWindow(QMainWindow):
 
             tick_business = [time, state]
 
-            self.kafka_producer.send('tick.business', value=tick_business)
+            self.kafka_producer.send('stock.business', value=tick_business)
             self.kafka_producer.flush()
 
     def SetRealReg(self, screen_no, code_list, fid_list, real_type):
