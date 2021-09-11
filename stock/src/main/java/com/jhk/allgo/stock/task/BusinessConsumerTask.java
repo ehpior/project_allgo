@@ -1,5 +1,7 @@
 package com.jhk.allgo.stock.task;
 
+import java.text.SimpleDateFormat;
+
 import org.json.JSONArray;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -15,6 +17,8 @@ public class BusinessConsumerTask {
 	
 	private final BusinessDto businessBean;
 	
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+	
 	@KafkaListener(topics = "${kafka.topic.business}")
 	public void listenTickBusiness(@Payload String data){
 	    //System.out.println(String.format("received data3 : %s", data));
@@ -27,7 +31,7 @@ public class BusinessConsumerTask {
 					.state(jAry.getString(1))
 					.build();*/
 			
-			businessBean.setTime(jAry.getString(0));
+			businessBean.setDate(dateFormat.parse(jAry.getString(0)));
 			businessBean.setState(jAry.getInt(1));
 			
 			System.out.println(businessBean.toString());

@@ -15,15 +15,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ScheduledTask {
 	
-	private final HashMap<String, ChegDto> tickCheg;
+	private final HashMap<String, ChegDto> chegBean;
 	
-	private final HashMap<String, ProgramDto> tickProgram;
+	private final HashMap<String, ProgramDto> programBean;
 	
-	private final BusinessDto tickBusiness;
+	private final BusinessDto businessBean;
 	
 	@Scheduled(cron = "0 40 15 * * *" , zone = "Asia/Seoul")
 	public void dataSave(){
-		int status = tickBusiness.getState();
+		int status = businessBean.getState();
 		
 		if(status == 9){
 			return;
@@ -35,7 +35,7 @@ public class ScheduledTask {
 	
 	@Scheduled(cron = "0 0 16 * * *" , zone = "Asia/Seoul")
 	public void scoreGenerate(){
-		int status = tickBusiness.getState();
+		int status = businessBean.getState();
 		
 		if(status == 9){
 			return;

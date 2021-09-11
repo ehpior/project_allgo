@@ -1,5 +1,7 @@
 package com.jhk.allgo.stock.model.dto;
 
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +17,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class BusinessDto {
 	
-	private String time;
+	private Date date;
 	private Integer state;
 	
 }
