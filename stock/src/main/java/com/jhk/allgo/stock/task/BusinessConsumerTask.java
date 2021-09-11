@@ -17,7 +17,7 @@ public class BusinessConsumerTask {
 	
 	private final BusinessDto businessBean;
 	
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+	private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
 	
 	@KafkaListener(topics = "${kafka.topic.business}")
 	public void listenTickBusiness(@Payload String data){
@@ -31,7 +31,7 @@ public class BusinessConsumerTask {
 					.state(jAry.getString(1))
 					.build();*/
 			
-			businessBean.setDate(dateFormat.parse(jAry.getString(0)));
+			businessBean.setDate(sdFormat.parse(jAry.getString(0)));
 			businessBean.setStatus(jAry.getInt(1));
 			
 			System.out.println(businessBean.toString());

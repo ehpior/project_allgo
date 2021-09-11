@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 import com.jhk.allgo.stock.model.dto.BusinessDto;
 import com.jhk.allgo.stock.model.dto.ChegDto;
 import com.jhk.allgo.stock.model.dto.ProgramDto;
+import com.jhk.allgo.stock.service.BusinessService;
+import com.jhk.allgo.stock.service.ChegService;
+import com.jhk.allgo.stock.service.ProgramService;
+import com.jhk.allgo.stock.service.algorithm.AllgoService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,10 +22,14 @@ import lombok.RequiredArgsConstructor;
 public class ScheduledTask {
 	
 	private final HashMap<String, ChegDto> chegBean;
-	
 	private final HashMap<String, ProgramDto> programBean;
-	
 	private final BusinessDto businessBean;
+	
+	private final ChegService chegService;
+	private final ProgramService programService;
+	private final BusinessService businessService;
+	
+	private final AllgoService allgoService; 
 	
 	private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
 	
@@ -32,8 +40,9 @@ public class ScheduledTask {
 			return;
 		}
 		
-		//tickCheg -> stock.cheg 저장
-		//tickProgram -> stock.program 저
+		businessService.insertBeanToDB();
+		chegService.insertBeanToDB();
+		programService.insertBeanToDB();
 	}
 	
 	@Scheduled(cron = "0 0 16 * * *" , zone = "Asia/Seoul")
@@ -43,8 +52,8 @@ public class ScheduledTask {
 			return;
 		}
 		
-		//타입별 알고리즘을 통한 스코어 산출
-		
+		allgoService.allgoAlphaGenerate();
+		allgoService.allgoBetaGenerate();
 	}
 	
 	private boolean isBusinessDay(){

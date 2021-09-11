@@ -104,6 +104,10 @@ public class ScoreService {
           
     }
 	
+	public void insertAll(List<Score> scoreList){
+		scoreRepository.saveAll(scoreList);
+	}
+	
 	public ResponseEntity<String> delete(DateTypeCodePK dateTypeCodePK) {
         Optional<Score> option = scoreRepository.findById(dateTypeCodePK);
         try {
