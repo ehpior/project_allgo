@@ -18,6 +18,6 @@ import lombok.experimental.Accessors;
 public class BusinessDto {
 	
 	private Date date;
-	private Integer state;
+	private Integer status;
 	
 }

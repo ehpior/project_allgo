@@ -1,5 +1,6 @@
 package com.jhk.allgo.stock.task;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -17,6 +18,8 @@ public class ProgramConsumerTask {
 	
 	private final HashMap<String, ProgramDto> programBean;
 	
+	private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+	
 	@KafkaListener(topics = "${kafka.topic.program}")
 	public void listenTickProgram(@Payload String data){
 	    //System.out.println(String.format("received data2 : %s", data));
@@ -25,8 +28,8 @@ public class ProgramConsumerTask {
 			JSONArray jAry = new JSONArray(data);
 			
 			ProgramDto tickProgramDto = ProgramDto.builder()
-					.code(jAry.getString(0))
-					.time(jAry.getString(1))
+					.date(sdFormat.parse(jAry.getString(0)))
+					.code(jAry.getString(1))
 					.sell_volume(jAry.getInt(2))
 					.sell_amount(jAry.getInt(3))
 					.buy_volume(jAry.getInt(4))

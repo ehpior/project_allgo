@@ -1,5 +1,7 @@
 package com.jhk.allgo.stock.task;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,11 +23,12 @@ public class ScheduledTask {
 	
 	private final BusinessDto businessBean;
 	
+	private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
+	
 	@Scheduled(cron = "0 40 15 * * *" , zone = "Asia/Seoul")
 	public void dataSave(){
-		int status = businessBean.getState();
 		
-		if(status == 9){
+		if(!isBusinessDay()){
 			return;
 		}
 		
@@ -35,14 +38,24 @@ public class ScheduledTask {
 	
 	@Scheduled(cron = "0 0 16 * * *" , zone = "Asia/Seoul")
 	public void scoreGenerate(){
-		int status = businessBean.getState();
 		
-		if(status == 9){
+		if(!isBusinessDay()){
 			return;
 		}
 		
 		//타입별 알고리즘을 통한 스코어 산출
 		
+	}
+	
+	private boolean isBusinessDay(){
+		String today = sdFormat.format(new Date());
+		String businessDate = sdFormat.format(businessBean.getDate());
+		
+		if(today.equals(businessDate)){
+			return true;
+		} else{
+			return false;
+		}
 	}
 	
 	

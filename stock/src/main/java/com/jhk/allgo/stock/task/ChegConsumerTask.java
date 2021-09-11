@@ -1,5 +1,6 @@
 package com.jhk.allgo.stock.task;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -17,6 +18,8 @@ public class ChegConsumerTask {
 	
 	private final HashMap<String, ChegDto> chegBean;
 	
+	private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+	
 	@KafkaListener(topics = "${kafka.topic.cheg}")
 	public void listenCheg(@Payload String data){
 	    //System.out.println(String.format("received data : %s", data));
@@ -24,19 +27,19 @@ public class ChegConsumerTask {
 		try {
 			JSONArray jAry = new JSONArray(data);
 			ChegDto tickChegDto = ChegDto.builder()
-					.code(jAry.getString(0))
-					.time(jAry.getString(1))
+					.date(sdFormat.parse(jAry.getString(0)))
+					.code(jAry.getString(1))
 					.price(jAry.getInt(2))
 					.change_price(jAry.getInt(3))
-					.increase_rate((float)jAry.getDouble(4))
+					.increase_rate(jAry.getDouble(4))
 					.volume(jAry.getInt(5))
 					.cul_volume(jAry.getInt(6))
 					.cul_amount(jAry.getInt(7))
 					.open(jAry.getInt(8))
 					.high(jAry.getInt(9))
 					.low(jAry.getInt(10))
-					.turn_over((float)jAry.getDouble(11))
-					.volume_power((float)jAry.getDouble(12))
+					.turn_over(jAry.getDouble(11))
+					.volume_power(jAry.getDouble(12))
 					.capitalization(jAry.getInt(13))
 					.build();
 			
