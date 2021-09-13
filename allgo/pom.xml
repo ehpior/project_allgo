@@ -9,9 +9,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jhk.allgo</groupId>
-	<artifactId>allgo</artifactId>
+	<artifactId>portfolio</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>allgo</name>
+	<name>portfolio</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
