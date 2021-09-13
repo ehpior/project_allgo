@@ -1,6 +1,6 @@
 spring:
   application:
-    name: allgo-service
+    name: portfolio-service
   profiles:
     active: dev
   config:

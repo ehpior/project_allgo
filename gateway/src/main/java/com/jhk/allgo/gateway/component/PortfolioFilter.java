@@ -10,23 +10,23 @@ import lombok.Data;
 import reactor.core.publisher.Mono;
 
 @Component
-public class AllgoFilter extends AbstractGatewayFilterFactory<AllgoFilter.Config> {
+public class PortfolioFilter extends AbstractGatewayFilterFactory<PortfolioFilter.Config> {
 	
-	private static final Logger logger = LogManager.getLogger(AllgoFilter.class);
-    public AllgoFilter() {
+	private static final Logger logger = LogManager.getLogger(PortfolioFilter.class);
+    public PortfolioFilter() {
         super(Config.class);
     }
 
     @Override
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
-            logger.info("AllgoFilter baseMessage>>>>>>" + config.baseMessage);
+            logger.info("PortfolioFilter baseMessage>>>>>>" + config.baseMessage);
             if (config.preLogger) {
-                logger.info("AllgoFilter Start>>>>>>" + exchange.getRequest());
+                logger.info("PortfolioFilter Start>>>>>>" + exchange.getRequest());
             }
             return chain.filter(exchange).then(Mono.fromRunnable(()->{
                 if (config.postLogger) {
-                    logger.info("AllgoFilter End>>>>>>" + exchange.getResponse());
+                    logger.info("PortfolioFilter End>>>>>>" + exchange.getResponse());
                 }
             }));
         });
