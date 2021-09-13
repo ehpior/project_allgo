@@ -2,7 +2,7 @@ package com.jhk.allgo.stock.service;
 
 import org.springframework.stereotype.Service;
 
-import com.jhk.allgo.stock.model.dto.BusinessDto;
+import com.jhk.allgo.stock.model.dto.bean.BusinessBeanDto;
 import com.jhk.allgo.stock.model.entity.Business;
 import com.jhk.allgo.stock.repository.BusinessRepository;
 
@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class BusinessService {
 	
 	private final BusinessRepository businessRepository;
-	private final BusinessDto businessBean;
+	private final BusinessBeanDto businessBean;
 	
 	public void insertBeanToDB() {
 		
@@ -25,7 +25,7 @@ public class BusinessService {
         );
     }
 	
-	public void create(BusinessDto businessDto) {
+	public void create(BusinessBeanDto businessDto) {
         Business newBusiness = businessRepository.save(
             Business.builder()
             	.date(businessDto.getDate())

@@ -5,14 +5,14 @@ import java.util.HashMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.jhk.allgo.stock.model.dto.StocksDto;
+import com.jhk.allgo.stock.model.dto.bean.StocksBeanDto;
 
 @Configuration
 public class StocksBeanConfig {
 	
 	@Bean
-	public HashMap<String, StocksDto> StocksBean(){
-		return new HashMap<String, StocksDto>();
+	public HashMap<String, StocksBeanDto> StocksBean(){
+		return new HashMap<String, StocksBeanDto>();
 	}
 	
 }

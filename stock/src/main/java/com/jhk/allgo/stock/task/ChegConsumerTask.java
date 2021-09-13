@@ -8,7 +8,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import com.jhk.allgo.stock.model.dto.ChegDto;
+import com.jhk.allgo.stock.model.dto.bean.ChegBeanDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChegConsumerTask {
 	
-	private final HashMap<String, ChegDto> chegBean;
+	private final HashMap<String, ChegBeanDto> chegBean;
 	
 	private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
 	
@@ -26,7 +26,7 @@ public class ChegConsumerTask {
 	    
 		try {
 			JSONArray jAry = new JSONArray(data);
-			ChegDto tickChegDto = ChegDto.builder()
+			ChegBeanDto tickChegDto = ChegBeanDto.builder()
 					.date(sdFormat.parse(jAry.getString(0)))
 					.code(jAry.getString(1))
 					.price(jAry.getInt(2))

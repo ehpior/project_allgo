@@ -59,7 +59,6 @@ public class ScoreController {
 
     @PutMapping("/date/{date}/type/{type}/code/{code}")
     public ResponseEntity<ScoreResponseDto> update(DateTypeCodePK dateTypeCode, @RequestBody ScoreRequestDto request){
-    	
         return scoreService.update(dateTypeCode, request);
     }
 

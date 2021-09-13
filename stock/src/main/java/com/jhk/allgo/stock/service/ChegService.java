@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.jhk.allgo.stock.model.dto.ChegDto;
+import com.jhk.allgo.stock.model.dto.bean.ChegBeanDto;
 import com.jhk.allgo.stock.model.entity.Cheg;
 import com.jhk.allgo.stock.repository.ChegRepository;
 
@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class ChegService {
 	
 	private final ChegRepository chegRepository;
-	private final HashMap<String, ChegDto> chegBean;
+	private final HashMap<String, ChegBeanDto> chegBean;
 	
 	public void insertBeanToDB(){
 		
@@ -47,7 +47,7 @@ public class ChegService {
 		
 	}
 	
-	public void create(ChegDto chegDto) {
+	public void create(ChegBeanDto chegDto) {
 		Cheg newCheg = chegRepository.save(
 			Cheg.builder()
 				.date(chegDto.getDate())

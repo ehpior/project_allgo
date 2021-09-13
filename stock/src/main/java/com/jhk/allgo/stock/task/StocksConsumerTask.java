@@ -8,7 +8,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import com.jhk.allgo.stock.model.dto.StocksDto;
+import com.jhk.allgo.stock.model.dto.bean.StocksBeanDto;
 import com.jhk.allgo.stock.service.StocksService;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StocksConsumerTask {
 	
-	private final HashMap<String, StocksDto> stocksBean;
+	private final HashMap<String, StocksBeanDto> stocksBean;
 	
 	private final StocksService stocksService;
 	
@@ -29,7 +29,7 @@ public class StocksConsumerTask {
 		try {
 			JSONArray jAry = new JSONArray(data);
 			
-			StocksDto stocksDto = StocksDto.builder()
+			StocksBeanDto stocksDto = StocksBeanDto.builder()
 					.date(dateFormat.parse(jAry.getString(0)))
 					.code(jAry.getString(1))
 					.name_kor(jAry.getString(2))

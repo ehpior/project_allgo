@@ -7,7 +7,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import com.jhk.allgo.stock.model.dto.BusinessDto;
+import com.jhk.allgo.stock.model.dto.bean.BusinessBeanDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BusinessConsumerTask {
 	
-	private final BusinessDto businessBean;
+	private final BusinessBeanDto businessBean;
 	
 	private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
 	

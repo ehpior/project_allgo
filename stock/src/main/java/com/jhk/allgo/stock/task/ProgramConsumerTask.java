@@ -8,7 +8,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import com.jhk.allgo.stock.model.dto.ProgramDto;
+import com.jhk.allgo.stock.model.dto.bean.ProgramBeanDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProgramConsumerTask {
 	
-	private final HashMap<String, ProgramDto> programBean;
+	private final HashMap<String, ProgramBeanDto> programBean;
 	
 	private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
 	
@@ -27,7 +27,7 @@ public class ProgramConsumerTask {
 		try {
 			JSONArray jAry = new JSONArray(data);
 			
-			ProgramDto tickProgramDto = ProgramDto.builder()
+			ProgramBeanDto tickProgramDto = ProgramBeanDto.builder()
 					.date(sdFormat.parse(jAry.getString(0)))
 					.code(jAry.getString(1))
 					.sell_volume(jAry.getInt(2))

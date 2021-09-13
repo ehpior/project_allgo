@@ -7,13 +7,14 @@ import java.util.HashMap;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.jhk.allgo.stock.model.dto.BusinessDto;
-import com.jhk.allgo.stock.model.dto.ChegDto;
-import com.jhk.allgo.stock.model.dto.ProgramDto;
+import com.jhk.allgo.stock.model.dto.bean.BusinessBeanDto;
+import com.jhk.allgo.stock.model.dto.bean.ChegBeanDto;
+import com.jhk.allgo.stock.model.dto.bean.ProgramBeanDto;
 import com.jhk.allgo.stock.service.BusinessService;
 import com.jhk.allgo.stock.service.ChegService;
 import com.jhk.allgo.stock.service.ProgramService;
-import com.jhk.allgo.stock.service.algorithm.AllgoService;
+import com.jhk.allgo.stock.service.algorithm.AllgoAlphaService;
+import com.jhk.allgo.stock.service.algorithm.AllgoBetaService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,15 +22,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ScheduledTask {
 	
-	private final HashMap<String, ChegDto> chegBean;
-	private final HashMap<String, ProgramDto> programBean;
-	private final BusinessDto businessBean;
+	private final HashMap<String, ChegBeanDto> chegBean;
+	private final HashMap<String, ProgramBeanDto> programBean;
+	private final BusinessBeanDto businessBean;
 	
 	private final ChegService chegService;
 	private final ProgramService programService;
 	private final BusinessService businessService;
 	
-	private final AllgoService allgoService; 
+	private final AllgoAlphaService allgoAlphaService; 
+	private final AllgoBetaService allgoBetaService; 
 	
 	private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
 	
@@ -52,8 +54,8 @@ public class ScheduledTask {
 			return;
 		}
 		
-		allgoService.allgoAlphaGenerate();
-		allgoService.allgoBetaGenerate();
+		allgoAlphaService.scoreGenerate();
+		allgoBetaService.scoreGenerate();
 	}
 	
 	private boolean isBusinessDay(){

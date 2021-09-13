@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jhk.allgo.stock.model.dto.BusinessDto;
-import com.jhk.allgo.stock.model.dto.ChegDto;
-import com.jhk.allgo.stock.model.dto.ProgramDto;
+import com.jhk.allgo.stock.model.dto.bean.BusinessBeanDto;
+import com.jhk.allgo.stock.model.dto.bean.ChegBeanDto;
+import com.jhk.allgo.stock.model.dto.bean.ProgramBeanDto;
 import com.jhk.allgo.stock.service.StockService;
 
 import io.swagger.annotations.Api;
@@ -24,19 +24,19 @@ public class StockController {
 	private final StockService stockService;
 	
 	@GetMapping("/cheg/{code}")
-    public ResponseEntity<ChegDto> findChegBycode(@PathVariable("code") String code){
+    public ResponseEntity<ChegBeanDto> findChegBycode(@PathVariable("code") String code){
 		
     	return stockService.findChegBycode(code);
     }
 	
 	@GetMapping("/program/{code}")
-    public ResponseEntity<ProgramDto> findProgramBycode(@PathVariable("code") String code){
+    public ResponseEntity<ProgramBeanDto> findProgramBycode(@PathVariable("code") String code){
 		
     	return stockService.findProgramBycode(code);
     }
 	
 	@GetMapping("/business")
-    public ResponseEntity<BusinessDto> getBusiness(){
+    public ResponseEntity<BusinessBeanDto> getBusiness(){
 		
     	return stockService.getBusiness();
     }

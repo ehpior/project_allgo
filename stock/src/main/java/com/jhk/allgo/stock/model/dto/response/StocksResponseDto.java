@@ -1,4 +1,4 @@
-package com.jhk.allgo.stock.model.dto;
+package com.jhk.allgo.stock.model.dto.response;
 
 import java.util.Date;
 
@@ -15,9 +15,11 @@ import lombok.experimental.Accessors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BusinessDto {
+public class StocksResponseDto {
 	
 	private Date date;
-	private Integer status;
+	private String code;
+	private String name_kor;
+	private Integer market;
 	
 }

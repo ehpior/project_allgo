@@ -1,4 +1,4 @@
-package com.jhk.allgo.stock.model.dto;
+package com.jhk.allgo.stock.model.dto.request;
 
 import java.util.Date;
 
@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProgramDto {
+public class ProgramRequestDto {
 	
 	private Date date;
 	private String code;

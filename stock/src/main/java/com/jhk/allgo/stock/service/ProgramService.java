@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.jhk.allgo.stock.model.dto.ChegDto;
-import com.jhk.allgo.stock.model.dto.ProgramDto;
+import com.jhk.allgo.stock.model.dto.bean.ChegBeanDto;
+import com.jhk.allgo.stock.model.dto.bean.ProgramBeanDto;
 import com.jhk.allgo.stock.model.entity.Cheg;
 import com.jhk.allgo.stock.model.entity.Program;
 import com.jhk.allgo.stock.repository.ProgramRepository;
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class ProgramService {
 	
 	private final ProgramRepository programRepository;
-	private final HashMap<String, ProgramDto> programBean;
+	private final HashMap<String, ProgramBeanDto> programBean;
 	
 public void insertBeanToDB(){
 		
@@ -43,7 +43,7 @@ public void insertBeanToDB(){
 		
 	}
 	
-	public void create(ProgramDto programDto) {
+	public void create(ProgramBeanDto programDto) {
 		Program newProgram = programRepository.save(
 			Program.builder()
 				.date(programDto.getDate())
