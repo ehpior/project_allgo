@@ -8,9 +8,13 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.jhk.allgo.stock.exception.CommonNotFoundException;
 import com.jhk.allgo.stock.model.dto.bean.ChegBeanDto;
 import com.jhk.allgo.stock.model.dto.bean.ProgramBeanDto;
+import com.jhk.allgo.stock.model.dto.response.StocksResponseDto;
 import com.jhk.allgo.stock.model.entity.Score;
+import com.jhk.allgo.stock.model.entity.Stocks;
+import com.jhk.allgo.stock.repository.StocksRepository;
 import com.jhk.allgo.stock.service.ScoreService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +27,8 @@ public class AllgoAlphaService {
 	private final HashMap<String, ProgramBeanDto> programBean;
 	
 	private final ScoreService scoreService;
+	
+	private final StocksRepository stocksRepository;
 	
 	private final String ALPHATYPE = "A";
 
@@ -86,12 +92,36 @@ public class AllgoAlphaService {
 		scoreService.insertAll(scoreList);
 	}
 	
-	public ResponseEntity<String> portfolioGenerate(List<String> holdingList){
+	public ResponseEntity<StocksResponseDto> portfolioGenerate(Date date, List<String> holdingList){
+		
+		StocksResponseDto portfolioStocks = null;
 		
 		if(holdingList == null){
 			holdingList = new ArrayList<String>();
 			holdingList.add(""); // dummy
 		}
+		
+		List<Stocks> portfolioList = stocksRepository.allgoAlphaPortfolioGenerate(date);
+		
+		for(Stocks stocks : portfolioList){
+			if(holdingList.contains(stocks.getCode())){
+				continue;
+			} else{
+				portfolioStocks = StocksResponseDto.builder()
+						.date(stocks.getDate())
+						.code(stocks.getCode())
+						.name_kor(stocks.getName_kor())
+						.market(stocks.getMarket())
+						.build();
+				break;
+			}
+		}
+		
+		if(portfolioStocks == null){
+			throw new CommonNotFoundException();
+		}
+		
+		return ResponseEntity.ok().body(portfolioStocks);
 		
 	}
 	

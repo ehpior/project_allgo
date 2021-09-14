@@ -1,16 +1,20 @@
 package com.jhk.allgo.stock.controller;
 
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jhk.allgo.stock.exception.CommonConstraintViolationException;
+import com.jhk.allgo.stock.model.dto.response.StocksResponseDto;
 import com.jhk.allgo.stock.service.algorithm.AllgoAlphaService;
 import com.jhk.allgo.stock.service.algorithm.AllgoBetaService;
 
@@ -25,14 +29,17 @@ public class AllgoController {
 	
 	private final AllgoAlphaService allgoAlphaService;
 	private final AllgoBetaService allgoBetaService;
-
-	@GetMapping("/{type}")
-    public ResponseEntity<String> findBytype(@RequestParam("type") String type, @RequestBody List<String> holdingList){
+	
+	@GetMapping("/type/{type}/date/{date}")
+    public ResponseEntity<StocksResponseDto> findBytype(
+    		@PathVariable("type") String type, 
+    		@PathVariable("date") @DateTimeFormat(pattern = "yyyyMMdd") Date date,
+    		@RequestBody @Nullable List<String> holdingList){
 		
 		if("A".equals(type)){
-			return allgoAlphaService.portfolioGenerate(holdingList);
+			return allgoAlphaService.portfolioGenerate(date, holdingList);
 		} else if("B".equals(type)){
-			return allgoBetaService.portfolioGenerate(holdingList);
+			return allgoBetaService.portfolioGenerate(date, holdingList);
 		} else{
 			throw new CommonConstraintViolationException();
 		}
