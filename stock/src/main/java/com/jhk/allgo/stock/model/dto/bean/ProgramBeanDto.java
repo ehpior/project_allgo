@@ -2,6 +2,8 @@ package com.jhk.allgo.stock.model.dto.bean;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +19,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class ProgramBeanDto {
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date date;
 	private String code;
 	private Integer sell_volume;

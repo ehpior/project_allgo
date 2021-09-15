@@ -30,11 +30,11 @@ public class AllgoController {
 	private final AllgoAlphaService allgoAlphaService;
 	private final AllgoBetaService allgoBetaService;
 	
-	@GetMapping("/type/{type}/date/{date}")
-    public ResponseEntity<StocksResponseDto> findBytype(
-    		@PathVariable("type") String type, 
-    		@PathVariable("date") @DateTimeFormat(pattern = "yyyyMMdd") Date date,
-    		@RequestBody @Nullable List<String> holdingList){
+	@GetMapping("/portfolio/{type}/{date}")
+	public ResponseEntity<StocksResponseDto> portfolioGenerate(
+			@PathVariable("type") String type,
+			@PathVariable("date") @DateTimeFormat(pattern = "yyyyMMdd") Date date,
+			@RequestBody @Nullable List<String> holdingList) {
 		
 		if("A".equals(type)){
 			return allgoAlphaService.portfolioGenerate(date, holdingList);
@@ -43,7 +43,6 @@ public class AllgoController {
 		} else{
 			throw new CommonConstraintViolationException();
 		}
-		
     }
 	
 }

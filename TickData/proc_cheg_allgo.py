@@ -16,6 +16,7 @@ from PyQt5.QAxContainer import *
 import redis
 from kafka import KafkaProducer
 from json import dumps
+from datetime import datetime
 
 """ This class defines a C-like struct """
 
@@ -43,6 +44,8 @@ class MyWindow(QMainWindow):
                                           decode_responses=True)
         
         self.kafka_producer = KafkaProducer(bootstrap_servers='1.240.167.231:9092', value_serializer=lambda x: dumps(x).encode('utf-8'))
+
+        self.today = datetime.now().strftime('%Y%m%d')
 
         self.setWindowTitle("Real")
         self.setGeometry(300, 300, 300, 600)
@@ -176,12 +179,12 @@ class MyWindow(QMainWindow):
                 volume_power = toFloat(self.GetCommRealData(code, 228))
                 capitalization = toInt(self.GetCommRealData(code, 311))
 
-                tick_cheg = [stock_code, time, price, change_price, increase_rate,
-                            volume, cul_volume, cul_amount, open, high, low, turn_over,
+                tick_cheg = [self.today + '-' + time, stock_code, abs(price), change_price, increase_rate,
+                            volume, cul_volume, cul_amount, abs(open), abs(high), abs(low), turn_over,
                             volume_power, capitalization]
 
                 self.kafka_producer.send('stock.cheg', value=tick_cheg)
-                self.kafka_producer.send('stock.price', value=[stock_code, time, price])
+                #self.kafka_producer.send('stock.price', value=[stock_code, abs(price)])
                 self.kafka_producer.flush()
             except Exception as e:
                 print(e)
@@ -198,7 +201,7 @@ class MyWindow(QMainWindow):
                 net_buy_volume = toInt(self.GetCommRealData(code, 210))
                 net_buy_amount = toInt(self.GetCommRealData(code, 212))
 
-                tick_program = [stock_code, time, sell_volume, sell_amount, buy_volume,
+                tick_program = [self.today + '-' + time, stock_code, sell_volume, sell_amount, buy_volume,
                                     buy_amount, net_buy_volume, net_buy_amount]
 
                 self.kafka_producer.send('stock.program', value=tick_program)
@@ -213,7 +216,7 @@ class MyWindow(QMainWindow):
             print(f'businessDay_state : {state}, {time}, {remained_time}')
             self.db_redis.set('businessDay_state', state)
 
-            tick_business = [time, state]
+            tick_business = [self.today + '-' + time, state]
 
             self.kafka_producer.send('stock.business', value=tick_business)
             self.kafka_producer.flush()

@@ -43,9 +43,9 @@ public class ChegConsumerTask {
 					.capitalization(jAry.getInt(13))
 					.build();
 			
-			chegBean.put(jAry.getString(0), tickChegDto);
+			chegBean.put(jAry.getString(1), tickChegDto);
 			
-			//System.out.println(tickCheg.toString());
+			//System.out.println(ChegBeanDto.toString());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

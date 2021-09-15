@@ -38,7 +38,7 @@ public class ProgramConsumerTask {
 					.net_buy_amount(jAry.getInt(7))
 					.build();
 			
-			programBean.put(jAry.getString(0), tickProgramDto);
+			programBean.put(jAry.getString(1), tickProgramDto);
 			
 			//System.out.println(tickProgram.toString());
 			

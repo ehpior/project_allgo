@@ -2,6 +2,11 @@ package com.jhk.allgo.stock.model.dto.response;
 
 import java.util.Date;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +22,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class ChegResponseDto {
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date date;
 	private String code;
 	private Integer price;

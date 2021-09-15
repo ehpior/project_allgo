@@ -59,36 +59,36 @@ class Kiwoom(QAxWidget):  # QAxWidget 클래스로부터 dynamicCall, setControl
 
         stock_code_list.sort()
 
-        today = datetime.now().strftime('%Y-%m-%d')
+        today = datetime.now().strftime('%Y%m%d')
         try:
             for index, code in enumerate(stock_code_list):
                 print(index, code)
                 name = self.dynamicCall("GetMasterCodeName(QString)", [code])  # 맨뒤는 종목코드, 코드에 따른 종목명을 가져옴
                 #if not (code and name):
                 #    continue
-                market = "-1"
+                market = -1
                 if code in tmp_code_list3:
-                    market = "3"
+                    market = 3
                 elif code in tmp_code_list8:
-                    market = "8"
+                    market = 8
                 elif code in tmp_code_list4:
-                    market = "4"
+                    market = 4
                 elif code in tmp_code_list5:
-                    market = "5"
+                    market = 5
                 elif code in tmp_code_list6:
-                    market = "6"
+                    market = 6
                 elif code in tmp_code_list9:
-                    market = "9"
+                    market = 9
                 elif code in tmp_code_list30:
-                    market = "30"
+                    market = 30
                 elif code in tmp_code_list50:
-                    market = "50"
+                    market = 50
                 elif 'ETN' in name:
-                    market = "99"
+                    market = 99
                 elif code in kospi_code_list:
-                    market = "0"
+                    market = 0
                 elif code in kosdaq_code_list:
-                    market = "10"
+                    market = 10
 
                 self.kafka_producer.send('stock.stocks', value=[today, code, name, market])
                 self.kafka_producer.flush()
