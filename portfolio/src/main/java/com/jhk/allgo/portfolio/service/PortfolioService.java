@@ -1,5 +1,6 @@
 package com.jhk.allgo.portfolio.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.jhk.allgo.portfolio.exception.CommonConstraintViolationException;
 import com.jhk.allgo.portfolio.exception.CommonNotFoundException;
+import com.jhk.allgo.portfolio.model.dto.common.StocksDto;
 import com.jhk.allgo.portfolio.model.dto.request.PortfolioRequestDto;
 import com.jhk.allgo.portfolio.model.dto.response.PortfolioResponseDto;
 import com.jhk.allgo.portfolio.model.dto.response.PortfolioResponseListDto;
@@ -24,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 public class PortfolioService {
 	
 	private final PortfolioRepository portfolioRepository;
+	
+	private final HashMap<String, Integer> priceBean;
 	
 	/**
 	 * 전체 포트폴리오 조회
@@ -163,6 +167,25 @@ public class PortfolioService {
 	                    .build()
                 );
     }
+	
+	public void createByBatch(StocksDto stocksDto, String allgo_type, Integer portfolio_id, String reason) {
+		
+		if(portfolio_id == -1){
+			portfolio_id = portfolioRepository.getMaxPortfolioId();
+		}
+		Integer price = priceBean.get(stocksDto.getCode());
+		
+		Portfolio newProduct = portfolioRepository.save(
+				Portfolio.builder()
+				.portfolioId(portfolio_id)
+				.allgoType(allgo_type)
+				.stockCode(stocksDto.getCode())
+				.stockName(stocksDto.getName_kor())
+				.price(price)
+				.reason(reason)
+				.build());
+		
+	}
 	
 	public ResponseEntity<PortfolioResponseDto> update(PortfolioRequestDto request, Long id) {
         Optional<Portfolio> option = portfolioRepository.findById(id);
