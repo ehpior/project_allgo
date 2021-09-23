@@ -80,13 +80,16 @@ public class AllgoAlphaService {
 				score *= 0.5;
 			}
 			
+			if(Double.isNaN(score)){
+				score = -10;
+			}
+			
 			scoreList.add(Score.builder()
 					.date(date)
 					.type(ALPHATYPE)
 					.code(code)
-					.score(score)
-					.build()
-			);
+					.score(Math.round(score*1000)/1000.0)
+					.build());
 		});
 		
 		scoreService.insertAll(scoreList);

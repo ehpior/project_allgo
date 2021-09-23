@@ -1,5 +1,6 @@
 package com.jhk.allgo.portfolio.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -134,6 +135,27 @@ public class PortfolioViewService {
 		                .build())
                 	.collect(Collectors.toList()))
                 .build());
+    }
+	
+	/**
+	 * 알고리즘 타입 및 상태를 통해 보유중 종목리스트 조회
+	 * @param allgo_type, status
+	 * @return
+	 */
+	public List<String> getCodeListByAllgoTypeAndStatus(String allgo_type, String status) {
+        List<PortfolioView> list = portfolioViewRepository.findByAllgoTypeAndStatus(allgo_type, status);
+        
+        if(list.size() == 0){
+        	throw new CommonNotFoundException();
+        }
+        
+        List<String> result = new ArrayList<String>();
+        
+        list.forEach((portfolioView)->{
+        	result.add(portfolioView.getStockCode());
+        });
+        
+        return result;
     }
 	
 	/**

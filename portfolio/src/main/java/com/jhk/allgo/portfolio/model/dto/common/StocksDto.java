@@ -1,4 +1,4 @@
-package com.jhk.allgo.stock.model.dto.bean;
+package com.jhk.allgo.portfolio.model.dto.common;
 
 import java.util.Date;
 
@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StocksBeanDto {
+public class StocksDto {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date date;
@@ -26,3 +26,4 @@ public class StocksBeanDto {
 	private Integer market;
 	
 }
+

@@ -47,13 +47,16 @@ public class AllgoBetaService {
 			
 			score = net_buy_amount / (double) capitalization * 100;
 			
+			if(Double.isNaN(score)){
+				score = 0;
+			}
+			
 			scoreList.add(Score.builder()
 					.date(date)
 					.type(BETATYPE)
 					.code(code)
-					.score(score)
-					.build()
-			);
+					.score(Math.round(score*1000)/1000.0)
+					.build());
 		});
 		
 		scoreService.insertAll(scoreList);

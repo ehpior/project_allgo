@@ -18,6 +18,6 @@ import lombok.experimental.Accessors;
 public class BusinessResponseDto {
 	
 	private Date date;
-	private Integer status;
+	private String status;
 	
 }

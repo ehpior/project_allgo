@@ -26,6 +26,6 @@ public class Business {
 	@Id
 	private Date date;
 	
-	private Integer status;
+	private String status;
 	
 }

@@ -16,21 +16,16 @@ public class PriceConsumerTask {
 
 	private final HashMap<String, Integer> priceBean;
 
-	private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+	//private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
 
-	@KafkaListener(topics = "${kafka.topic.cheg}")
+	@KafkaListener(topics = "${kafka.topic.price}")
 	public void listenCheg(@Payload String data) {
-		// System.out.println(String.format("received data : %s", data));
-
 		try {
 			JSONArray jAry = new JSONArray(data);
 
 			priceBean.put(jAry.getString(0), jAry.getInt(1));
 
-			// System.out.println(tickCheg.toString());
-
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

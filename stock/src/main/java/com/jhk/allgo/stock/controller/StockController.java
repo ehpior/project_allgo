@@ -1,5 +1,8 @@
 package com.jhk.allgo.stock.controller;
 
+import java.util.HashMap;
+import java.util.Set;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +26,24 @@ public class StockController {
 	
 	private final StockService stockService;
 	
+	private final HashMap<String, ChegBeanDto> chegBean;
+	private final HashMap<String, ProgramBeanDto> programBean;
+	
 	@GetMapping("/cheg/{code}")
     public ResponseEntity<ChegBeanDto> findChegBycode(@PathVariable("code") String code){
 		
     	return stockService.findChegBycode(code);
     }
+	
+	@GetMapping("/cheg")
+    public Set<String> findChegBycode2(){
+    	return chegBean.keySet();
+    }
+	
+	@GetMapping("/program")
+	public Set<String> findChegBycode3(){
+		return programBean.keySet();
+	}
 	
 	@GetMapping("/program/{code}")
     public ResponseEntity<ProgramBeanDto> findProgramBycode(@PathVariable("code") String code){

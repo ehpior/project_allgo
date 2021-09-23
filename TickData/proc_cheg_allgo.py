@@ -40,8 +40,8 @@ class MyWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.db_redis = redis.StrictRedis(host='1.240.167.231', port=6379, db=0, password='wjdgusrl34', charset="utf-8",
-                                          decode_responses=True)
+        #self.db_redis = redis.StrictRedis(host='1.240.167.231', port=6379, db=0, password='wjdgusrl34', charset="utf-8",
+        #                                  decode_responses=True)
         
         self.kafka_producer = KafkaProducer(bootstrap_servers='1.240.167.231:9092', value_serializer=lambda x: dumps(x).encode('utf-8'))
 
@@ -214,7 +214,7 @@ class MyWindow(QMainWindow):
             state = self.GetCommRealData(code, 215)
             remained_time = self.GetCommRealData(code, 214)
             print(f'businessDay_state : {state}, {time}, {remained_time}')
-            self.db_redis.set('businessDay_state', state)
+            #self.db_redis.set('businessDay_state', state)
 
             tick_business = [self.today + '-' + time, state]
 

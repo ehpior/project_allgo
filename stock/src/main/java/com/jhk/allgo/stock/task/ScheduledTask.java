@@ -70,4 +70,17 @@ public class ScheduledTask {
 	}
 	
 	
+	
+	public void dataSaveTest(){
+		businessService.insertBeanToDB();
+		chegService.insertBeanToDB();
+		programService.insertBeanToDB();
+	}
+	
+	public void scoreGenerateTest(){
+		allgoAlphaService.scoreGenerate();
+		allgoBetaService.scoreGenerate();
+	}
+	
+	
 }

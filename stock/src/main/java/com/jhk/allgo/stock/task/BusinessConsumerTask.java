@@ -32,7 +32,7 @@ public class BusinessConsumerTask {
 					.build();*/
 			
 			businessBean.setDate(sdFormat.parse(jAry.getString(0)));
-			businessBean.setStatus(jAry.getInt(1));
+			businessBean.setStatus(jAry.getString(1));
 			
 			System.out.println(businessBean.toString());
 			
